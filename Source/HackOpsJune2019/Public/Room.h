@@ -3,13 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Item.h"
+#include "GameCharacter.h"
+#include "Room.generated.h"
 
-/**
- * 
- */
-class Room
+USTRUCT()
+struct FRoom
 {
-public:
-	Room();
-	~Room();
+	GENERATED_BODY()
+
+	FString Name;
+	TArray<TSharedPtr<FItem>> Items;
+	TArray<TSharedPtr<UGameCharacter>> Characters;
+
+	// Should include a self-reference, for staying in the same room
+	TArray<TSharedPtr<FRoom>> AdjacentRooms;
 };

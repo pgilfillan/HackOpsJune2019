@@ -4,12 +4,10 @@
 
 #include "CoreMinimal.h"
 
-/**
- * 
- */
-class Item
+USTRUCT()
+struct FItem
 {
-public:
-	Item();
-	~Item();
+	GENERATED_BODY()
+
+	FString Name;
 };

@@ -3,11 +3,16 @@
 
 #include "GameCharacter.h"
 
-TSharedPtr<TArray<FMotivationAction>> UGameCharacter::GetPrioritisedMotivationActions(FMapState* State)
+TArray<TSharedPtr<FRoom>> UGameCharacter::GetPrioritisedMoveActions(TSharedRef<FMapState> State)
 {
-	auto Actions = MakeShared<TArray<FMotivationAction>>();
-	FMotivationAction Action;
-	Action.Type = MotivationActionType::Eat;
-	Actions->Add(Action);
+	return CurrRoom->AdjacentRooms;
+}
+
+TArray<FInteractionAction> UGameCharacter::GetPrioritisedInteractionActions(TSharedRef<FMapState> State)
+{
+	TArray<FInteractionAction> Actions;
+	FInteractionAction Action;
+	Action.Type = InteractionActionType::Eat;
+	Actions.Add(Action);
 	return Actions;
 }

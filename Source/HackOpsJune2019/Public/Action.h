@@ -3,27 +3,30 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Room.h"
 #include "Action.generated.h"
 
-enum class MotivationActionType
+enum class InteractionActionType
 {
-	Move,
 	Eat,
 	Drink,
 	Talk,
 	Inspect,
 	Use,
-	Read
+	Read,
+	Kill,
+	Nothing
 };
 
 USTRUCT()
-struct FMotivationAction
+struct FInteractionAction
 {
 	GENERATED_BODY()
 
-	MotivationActionType Type;
+	InteractionActionType Type;
 
-	//For specific action types
-
+	//For specific action types, null if not taking that action
+	TSharedPtr<FRoom> MovingTo;
+	TSharedPtr<FItem> ItemActingOn;
 };
 
