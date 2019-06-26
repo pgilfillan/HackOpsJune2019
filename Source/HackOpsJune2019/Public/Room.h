@@ -12,6 +12,7 @@ struct FRoom
 {
 	GENERATED_BODY()
 
+	FRoom() {}
 	FString Name;
 	//TArray<TSharedPtr<FItem>> Items;
 	TArray<TSharedPtr<UGameCharacter>> Characters;

@@ -12,6 +12,6 @@ struct FMapState
 {
 	GENERATED_BODY()
 
-public:
+	FMapState() {}
 	TArray<TSharedPtr<UGameCharacter>> Characters;
 };
