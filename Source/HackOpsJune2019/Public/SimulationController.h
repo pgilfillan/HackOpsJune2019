@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "MapState.h"
 #include "SimulationController.generated.h"
 
 UCLASS()
@@ -11,5 +12,10 @@ class HACKOPSJUNE2019_API ASimulationController : public AActor
 {
 	GENERATED_BODY()
 	
+public:
+	UFUNCTION(BlueprintCallable)
+		bool SimulateFrom(FMapState* InitState);
 
+private:
+	const int MaxMoves = 20; //to change
 };

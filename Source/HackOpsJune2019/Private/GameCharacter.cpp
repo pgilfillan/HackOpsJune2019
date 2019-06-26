@@ -3,10 +3,11 @@
 
 #include "GameCharacter.h"
 
-GameCharacter::GameCharacter()
+TSharedPtr<TArray<FMotivationAction>> UGameCharacter::GetPrioritisedMotivationActions(FMapState* State)
 {
-}
-
-GameCharacter::~GameCharacter()
-{
+	auto Actions = MakeShared<TArray<FMotivationAction>>();
+	FMotivationAction Action;
+	Action.Type = MotivationActionType::Eat;
+	Actions->Add(Action);
+	return Actions;
 }

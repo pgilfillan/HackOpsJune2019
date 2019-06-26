@@ -1,12 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "MapState.h"
 
-MapState::MapState()
+TArray<TSharedPtr<TArray<FMotivationAction>>> FMapState::GetMotivationActions()
 {
-}
-
-MapState::~MapState()
-{
+	TArray<TSharedPtr<TArray<FMotivationAction>>> Actions;
+	for (auto& Character : Characters)
+	{
+		Actions.Add(Character.GetPrioritisedMotivationActions(this));
+	}
+	return Actions;
 }
