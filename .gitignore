@@ -1,0 +1,20 @@
+# Ignore UE4-generated directories
+Binaries
+Intermediate
+Saved
+
+# Ignore build artifacts
+Build
+DerivedDataCache
+
+# Ignore Visual Studio data
+.vs
+*.sln
+
+# Ignore Visual Studio Code data
+.vscode
+*.code-workspace
+
+# Ignore VIM temporary files
+*.swp
+
