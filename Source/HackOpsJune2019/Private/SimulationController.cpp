@@ -13,11 +13,10 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 		// Get move actions
 		for (auto& Player : CurrState->Characters)
 		{
-			/*
-			auto& PrioritisedMoveActions = Player->GetPrioritisedMoveActions(CurrState);
+			auto PrioritisedMoveActions = Player->GetPrioritisedMoveActions(CurrState);
 
 			int i = 0;
-			for (; i < PrioritisedMoveActions.Num; ++i)
+			for (; i < PrioritisedMoveActions.Num(); ++i)
 			{
 				// TODO: Update room
 
@@ -26,10 +25,10 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 			}
 
 			// If no suitable move found (because of conflicts)
-			if (i == PrioritisedMoveActions.Num)
+			if (i == PrioritisedMoveActions.Num())
 			{
 				UE_LOG(LogTemp, Warning, TEXT("No move was able to be taken, defaulting to do nothing"));
-			}*/
+			}
 		}
 
 		// Get interaction actions

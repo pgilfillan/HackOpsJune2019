@@ -17,7 +17,7 @@ class HACKOPSJUNE2019_API UGameCharacter : public UObject
 	GENERATED_BODY()
 	
 public:
-	//TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(TSharedRef<FMapState> State);
+	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(TSharedRef<FMapState> State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(FMapState& State);
 
 private:
