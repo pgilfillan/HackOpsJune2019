@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Room.h"
+#include "Item.h"
 #include "Action.generated.h"
 
 enum class InteractionActionType
@@ -18,6 +18,8 @@ enum class InteractionActionType
 	Nothing
 };
 
+class UGameCharacter;
+
 USTRUCT(BlueprintType)
 struct FInteractionAction
 {
@@ -27,5 +29,6 @@ struct FInteractionAction
 
 	//For specific action types, nullptr if not taking that action
 	TSharedPtr<FItem> ItemActingOn;
+	UGameCharacter* CharacterToKill;
 };
 

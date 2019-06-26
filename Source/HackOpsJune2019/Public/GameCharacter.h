@@ -11,6 +11,7 @@
 struct FMapState;
 struct FRoom;
 
+// Should probably be a struct like the other classes but oh well
 UCLASS()
 class HACKOPSJUNE2019_API UGameCharacter : public UObject
 {
@@ -19,8 +20,9 @@ class HACKOPSJUNE2019_API UGameCharacter : public UObject
 public:
 	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(TSharedRef<FMapState> State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(FMapState& State);
+	TSharedPtr<FRoom> CurrRoom;
+	bool IsDead = false;
 
 private:
 	FString Name;
-	FRoom* CurrRoom;
 };

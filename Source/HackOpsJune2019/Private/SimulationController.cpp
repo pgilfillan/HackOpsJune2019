@@ -1,5 +1,6 @@
 #include "GameCharacter.h"
 #include "Action.h"
+#include "Room.h"
 #include "SimulationController.h"
 
 bool ASimulationController::SimulateFrom(const FMapState& InitState)
@@ -11,17 +12,19 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 	while (!TerminalState && ElapsedMoves < MaxMoves)
 	{
 		// Get move actions
-		for (auto& Player : CurrState->Characters)
+		for (auto& Character : CurrState->Characters)
 		{
-			auto PrioritisedMoveActions = Player->GetPrioritisedMoveActions(CurrState);
+			auto PrioritisedMoveActions = Character->GetPrioritisedMoveActions(CurrState);
 
 			int i = 0;
 			for (; i < PrioritisedMoveActions.Num(); ++i)
 			{
-				// TODO: Update room
-
-				// TODO: check for conflicts
-				break;
+				auto& DesiredRoom = PrioritisedMoveActions[i];
+				//TODO: check in a better way (this depends on order)
+				if (DesiredRoom->Characters.Num() + 1 < DesiredRoom->NumAllowedInside)
+				{
+					Character->CurrRoom = DesiredRoom;
+				}
 			}
 
 			// If no suitable move found (because of conflicts)
@@ -32,17 +35,23 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 		}
 
 		// Get interaction actions
-		for (auto& Player : CurrState->Characters)
+		for (auto& Character : CurrState->Characters)
 		{
-			auto PlayerPrioritisedActions = Player->GetPrioritisedInteractionActions(CurrState.Get());
+			auto PlayerPrioritisedActions = Character->GetPrioritisedInteractionActions(CurrState.Get());
 
 			int i = 0;
 			for (; i < PlayerPrioritisedActions.Num(); ++i)
 			{
-				switch (PlayerPrioritisedActions[i].Type)
+				auto& DesiredAction = PlayerPrioritisedActions[i];
+
+				switch (DesiredAction.Type)
 				{
 				case InteractionActionType::Kill:
-					TerminalState = true;
+					if (Character->CurrRoom == DesiredAction.CharacterToKill->CurrRoom)
+					{
+						DesiredAction.CharacterToKill->IsDead = true;
+						TerminalState = true;
+					}
 				}
 
 				// TODO: check for conflicts
@@ -58,5 +67,12 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 
 		ElapsedMoves++;
 	}
+
+	if (ElapsedMoves == MaxMoves)
+	{
+		//Reached end of night with goal succeeded
+		return true;
+	}
+
 	return false;
 }
