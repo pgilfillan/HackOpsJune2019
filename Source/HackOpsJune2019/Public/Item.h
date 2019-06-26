@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
+/*
 USTRUCT()
 struct FItem
 {
 	GENERATED_BODY()
 
 	FString Name;
-};
+};*/

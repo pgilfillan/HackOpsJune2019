@@ -1,6 +1,6 @@
 #include "SimulationController.h"
 
-bool ASimulationController::SimulateFrom(const FMapState* InitState)
+bool ASimulationController::SimulateFrom(const FMapState& InitState)
 {
 	auto CurrState = MakeShared<FMapState>(InitState);
 	bool TerminalState = false;
@@ -11,6 +11,7 @@ bool ASimulationController::SimulateFrom(const FMapState* InitState)
 		// Get move actions
 		for (auto& Player : CurrState->Characters)
 		{
+			/*
 			auto& PrioritisedMoveActions = Player->GetPrioritisedMoveActions(CurrState);
 
 			int i = 0;
@@ -26,7 +27,7 @@ bool ASimulationController::SimulateFrom(const FMapState* InitState)
 			if (i == PrioritisedMoveActions.Num)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("No move was able to be taken, defaulting to do nothing"));
-			}
+			}*/
 		}
 
 		// Get interaction actions

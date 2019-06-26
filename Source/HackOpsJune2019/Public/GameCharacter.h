@@ -2,23 +2,25 @@
 
 #pragma once
 
-#include "Action.h"
-#include "MapState.h"
-#include "Room.h"
 #include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
+#include "Room.h"
+#include "MapState.h"
+#include "Action.h"
+#include "Item.h"
 #include "GameCharacter.generated.h"
 
+
 UCLASS()
-class UGameCharacter : public UObject
+class HACKOPSJUNE2019_API UGameCharacter : public UObject
 {
 	GENERATED_BODY()
-
+	
 public:
-	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(TSharedRef<FMapState> State);
+	//TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(TSharedRef<FMapState> State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(TSharedRef<FMapState> State);
 
 private:
 	FString Name;
 	TSharedPtr<FRoom> CurrRoom;
-	TSharedPtr<FItem> CurrHeldItem;
 };

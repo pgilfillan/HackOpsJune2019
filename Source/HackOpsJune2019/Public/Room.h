@@ -13,7 +13,7 @@ struct FRoom
 	GENERATED_BODY()
 
 	FString Name;
-	TArray<TSharedPtr<FItem>> Items;
+	//TArray<TSharedPtr<FItem>> Items;
 	TArray<TSharedPtr<UGameCharacter>> Characters;
 
 	// Should include a self-reference, for staying in the same room

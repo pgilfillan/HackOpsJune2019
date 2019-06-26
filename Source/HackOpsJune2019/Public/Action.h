@@ -27,6 +27,6 @@ struct FInteractionAction
 
 	//For specific action types, null if not taking that action
 	TSharedPtr<FRoom> MovingTo;
-	TSharedPtr<FItem> ItemActingOn;
+	//TSharedPtr<FItem> ItemActingOn;
 };
 
