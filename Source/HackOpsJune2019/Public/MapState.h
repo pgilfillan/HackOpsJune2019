@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Action.h"
-#include "GameCharacter.h"
 #include "MapState.generated.h"
+
+class UGameCharacter;
 
 USTRUCT(BlueprintType)
 struct FMapState
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 	FMapState() {}
 	TArray<TSharedPtr<UGameCharacter>> Characters;

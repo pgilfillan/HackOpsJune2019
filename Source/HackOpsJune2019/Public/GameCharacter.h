@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "Room.h"
-#include "MapState.h"
 #include "Action.h"
 #include "Item.h"
 #include "GameCharacter.generated.h"
 
+struct FMapState;
+struct FRoom;
 
 UCLASS()
 class HACKOPSJUNE2019_API UGameCharacter : public UObject
@@ -18,9 +18,9 @@ class HACKOPSJUNE2019_API UGameCharacter : public UObject
 	
 public:
 	//TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(TSharedRef<FMapState> State);
-	TArray<FInteractionAction> GetPrioritisedInteractionActions(TSharedRef<FMapState> State);
+	TArray<FInteractionAction> GetPrioritisedInteractionActions(FMapState& State);
 
 private:
 	FString Name;
-	TSharedPtr<FRoom> CurrRoom;
+	FRoom* CurrRoom;
 };

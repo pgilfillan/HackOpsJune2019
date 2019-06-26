@@ -33,7 +33,7 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 		// Get interaction actions
 		for (auto& Player : CurrState->Characters)
 		{
-			auto& PlayerPrioritisedActions = Player->GetPrioritisedInteractionActions(CurrState);
+			auto& PlayerPrioritisedActions = Player->GetPrioritisedInteractionActions(CurrState.Get());
 
 			int i = 0;
 			for (; i < PlayerPrioritisedActions.Num; ++i)

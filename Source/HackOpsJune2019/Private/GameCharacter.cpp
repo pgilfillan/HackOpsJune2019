@@ -3,12 +3,13 @@
 
 #include "GameCharacter.h"
 
+/*
 TArray<TSharedPtr<FRoom>> UGameCharacter::GetPrioritisedMoveActions(TSharedRef<FMapState> State)
 {
 	return CurrRoom->AdjacentRooms;
-}
+}*/
 
-TArray<FInteractionAction> UGameCharacter::GetPrioritisedInteractionActions(TSharedRef<FMapState> State)
+TArray<FInteractionAction> UGameCharacter::GetPrioritisedInteractionActions(FMapState& State)
 {
 	TArray<FInteractionAction> Actions;
 	FInteractionAction Action;

@@ -4,18 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Item.h"
-#include "GameCharacter.h"
 #include "Room.generated.h"
 
-USTRUCT()
+class UGameCharacter;
+
+USTRUCT(BlueprintType)
 struct FRoom
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 	FRoom() {}
 	FString Name;
 	//TArray<TSharedPtr<FItem>> Items;
-	TArray<TSharedPtr<UGameCharacter>> Characters;
+	TArray<UGameCharacter*> Characters;
 
 	// Should include a self-reference, for staying in the same room
 	TArray<TSharedPtr<FRoom>> AdjacentRooms;

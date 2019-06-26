@@ -18,15 +18,15 @@ enum class InteractionActionType
 	Nothing
 };
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FInteractionAction
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 	InteractionActionType Type;
 
 	//For specific action types, null if not taking that action
-	TSharedPtr<FRoom> MovingTo;
+	FRoom* MovingTo;
 	//TSharedPtr<FItem> ItemActingOn;
 };
 
