@@ -13,6 +13,5 @@ struct FMapState
 	GENERATED_BODY()
 
 public:
-	TArray<TSharedPtr<TArray<FMotivationAction>>> GetMotivationActions();
-	TArray<UGameCharacter> Characters;
+	TArray<TSharedPtr<UGameCharacter>> Characters;
 };
