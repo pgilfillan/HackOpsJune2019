@@ -1,3 +1,5 @@
+#include "GameCharacter.h"
+#include "Action.h"
 #include "SimulationController.h"
 
 bool ASimulationController::SimulateFrom(const FMapState& InitState)
@@ -33,10 +35,10 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 		// Get interaction actions
 		for (auto& Player : CurrState->Characters)
 		{
-			auto& PlayerPrioritisedActions = Player->GetPrioritisedInteractionActions(CurrState.Get());
+			auto PlayerPrioritisedActions = Player->GetPrioritisedInteractionActions(CurrState.Get());
 
 			int i = 0;
-			for (; i < PlayerPrioritisedActions.Num; ++i)
+			for (; i < PlayerPrioritisedActions.Num(); ++i)
 			{
 				switch (PlayerPrioritisedActions[i].Type)
 				{
