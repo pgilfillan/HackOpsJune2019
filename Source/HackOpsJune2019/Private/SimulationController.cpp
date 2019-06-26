@@ -51,7 +51,7 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 			}
 
 			// If no suitable move found (because of conflicts)
-			if (i == PlayerPrioritisedActions.Num)
+			if (i == PlayerPrioritisedActions.Num())
 			{
 				UE_LOG(LogTemp, Warning, TEXT("No move was able to be taken, defaulting to do nothing"));
 			}
