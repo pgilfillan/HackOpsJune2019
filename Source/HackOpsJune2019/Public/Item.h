@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-/*
-USTRUCT()
+#include "Item.generated.h"
+
+USTRUCT(BlueprintType)
 struct FItem
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 	FString Name;
-};*/
+};

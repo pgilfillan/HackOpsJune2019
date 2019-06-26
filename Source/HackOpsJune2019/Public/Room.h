@@ -15,7 +15,7 @@ struct FRoom
 
 	FRoom() {}
 	FString Name;
-	//TArray<TSharedPtr<FItem>> Items;
+	TArray<FItem*> Items;
 	TArray<UGameCharacter*> Characters;
 
 	// Should include a self-reference, for staying in the same room
