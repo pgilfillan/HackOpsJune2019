@@ -13,11 +13,11 @@ TArray<FInteractionAction> RevGreenBehaviour::GetPrioritisedInteractionActions(c
 	FInteractionAction Action;
 	Action.Type = InteractionActionType::Nothing;
 
+	auto& OurRoom = Character->CurrRoom;
 	for (auto& OtherCharacter : State.Characters)
 	{
-		auto& OurRoom = Character->CurrRoom;
 		// If in the same room
-		if (OurRoom->Name == Character->CurrRoom->Name)
+		if (OurRoom->Name == OtherCharacter->CurrRoom->Name)
 		{
 			switch (CharacterNamesMap[OtherCharacter->Name])
 			{
@@ -27,7 +27,7 @@ TArray<FInteractionAction> RevGreenBehaviour::GetPrioritisedInteractionActions(c
 			case Character::DrBlack:
 				break;
 			case Character::MrsPeac:
-				if (Character->CurrRoom->NumCharactersInside == 2 && (OurRoom->ItemInRoom("Dagger") ||
+				if (OurRoom->NumCharactersInside == 2 && (OurRoom->ItemInRoom("Dagger") ||
 					OurRoom->ItemInRoom("Revolver") || OurRoom->ItemInRoom("Rope")))
 				{
 					Action.FlavourText = FString(TEXT("Confession is only for the holy Miss Peacock.  God punishes those who break that trust"));
@@ -40,7 +40,7 @@ TArray<FInteractionAction> RevGreenBehaviour::GetPrioritisedInteractionActions(c
 				}
 				break;
 			case Character::MrsWhite:
-				if (Character->CurrRoom->NumCharactersInside == 2 && OurRoom->ItemInRoom("Candlestick"))
+				if (OurRoom->NumCharactersInside == 2 && OurRoom->ItemInRoom("Candlestick"))
 				{
 					Action.FlavourText = FString(TEXT("Miss white I think you dropped this. Wait a moment isn't this the missing candlesti..."));
 				}
@@ -48,13 +48,14 @@ TArray<FInteractionAction> RevGreenBehaviour::GetPrioritisedInteractionActions(c
 			case Character::MsScar:
 				break;
 			case Character::ProfPlum:
-				if (Character->CurrRoom->NumCharactersInside == 2 && (OurRoom->ItemInRoom("Lead pipe") ||
+				if (OurRoom->NumCharactersInside == 2 && (OurRoom->ItemInRoom("Lead pipe") ||
 					OurRoom->ItemInRoom("Spanner") || OurRoom->ItemInRoom("Candlestick")))
 				{
 					Action.FlavourText = FString(TEXT("I can't in good conscience let you leave with what you just told me.  God punishes the wicked Professor"));
 					Action.Type = InteractionActionType::Kill;
 					Action.CharacterToKill = OtherCharacter;
 				}
+				break;
 			case Character::RevGreen:
 				break;
 			default:

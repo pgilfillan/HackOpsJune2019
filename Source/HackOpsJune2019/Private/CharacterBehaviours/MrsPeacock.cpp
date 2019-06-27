@@ -12,10 +12,11 @@ TArray<FInteractionAction> MrsPeacockBehaviour::GetPrioritisedInteractionActions
 	FInteractionAction Action;
 	Action.Type = InteractionActionType::Nothing;
 
+	auto& OurRoom = Character->CurrRoom;
 	for (auto& OtherCharacter : State.Characters)
 	{
 		// If not ourself and if in the same room
-		if (Character->CurrRoom->Name == Character->CurrRoom->Name)
+		if (OurRoom->Name == OtherCharacter->CurrRoom->Name)
 		{
 			switch (CharacterNamesMap[OtherCharacter->Name])
 			{
@@ -26,10 +27,13 @@ TArray<FInteractionAction> MrsPeacockBehaviour::GetPrioritisedInteractionActions
 			case Character::MrsPeac:
 				break;
 			case Character::MrsWhite:
+				Action.FlavourText = FString(TEXT("Mrs White I admire how long you've worked here and never once have you asked for a raise."));
 				break;
 			case Character::MsScar:
+				Action.FlavourText = FString(TEXT("Mr Black told me your little secret, I knew you were a Harlot"));
 				break;
 			case Character::ProfPlum:
+				Action.FlavourText = FString(TEXT("Professor wasn't your Father in the same battalion as Col Mustard?"));
 				break;
 			case Character::RevGreen:
 				break;
