@@ -1,5 +1,6 @@
 #include "GameCharacter.h"
 #include "Room.h"
+#include "CharacterBehaviours/CharacterBehaviour.h"
 #include "Engine/World.h"
 
 FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom)
@@ -7,17 +8,19 @@ FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> Cu
 	this->HeldItem = Other.HeldItem;
 	this->IsDead = Other.IsDead;
 	this->Name = Other.Name;
+	this->Behaviour = Other.Behaviour;
 	this->CurrRoom = CurrRoom;
 }
 
-FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> Room) :
+FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> Room, TSharedPtr<CharacterBehaviour> GivenBehaviour) :
 	CurrRoom(Room),
 	Name(Name),
-	GameCharacterBP(GameCharacterBP)
+	GameCharacterBP(GameCharacterBP),
+	Behaviour(GivenBehaviour)
 {
 }
 
-void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
+void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith, int verticalOffset)
 {
 	UWorld* world = ActorToSpawnWith->GetWorld();
 	if (world)
@@ -25,23 +28,10 @@ void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
 		FActorSpawnParameters SpawnParameters{};
 		SpawnParameters.Owner = ActorToSpawnWith;
 		SpawnParameters.Name = FName(*Name);
-		const FVector SpawnLocation = CurrRoom->Location;
+
+		// Vertical offset stops characters from looking strange when moving through each other
+		const FVector SpawnLocation = FVector{ CurrRoom->Location.X, CurrRoom->Location.Y, CurrRoom->Location.Z + verticalOffset };
 		const FRotator SpawnRotation{};
 		world->SpawnActor(GameCharacterBP, &SpawnLocation, &SpawnRotation, SpawnParameters);
 	}
-}
-
-TArray<TSharedPtr<FRoom>> FGameCharacter::GetPrioritisedMoveActions(const FMapState& State)
-{
-	//TODO: give priority to particular rooms based on motivation
-	return CurrRoom->AdjacentRooms;
-}
-
-TArray<FInteractionAction> FGameCharacter::GetPrioritisedInteractionActions(const FMapState& State)
-{
-	TArray<FInteractionAction> Actions;
-	FInteractionAction Action;
-	Action.Type = InteractionActionType::Eat;
-	Actions.Add(Action);
-	return Actions;
 }

@@ -11,6 +11,7 @@
 
 struct FMapState;
 struct FRoom;
+class CharacterBehaviour;
 
 USTRUCT(BlueprintType)
 struct FGameCharacter
@@ -19,18 +20,15 @@ struct FGameCharacter
 	
 public:
 	FGameCharacter() {}
-	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room);
+	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room, TSharedPtr<CharacterBehaviour> GivenBehaviour);
 	FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom);
 
-	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith);
-
-	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
-	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
+	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith, int verticalOffset);
 
 	TSharedPtr<FRoom> CurrRoom;
 	TSharedPtr<FItem> HeldItem;
 	bool IsDead = false;
 	FString Name;
-
 	TSubclassOf<class AActor> GameCharacterBP;
+	TSharedPtr<CharacterBehaviour> Behaviour;
 };
