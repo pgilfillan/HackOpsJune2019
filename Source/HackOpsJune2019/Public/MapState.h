@@ -24,4 +24,7 @@ struct FMapState
 	//Index by name
 	TMap<FString, TSharedPtr<FRoom>> Rooms;
 	bool IsTerminal = false;
+
+	TSharedPtr<FMapState> ParentState;
+	TSharedPtr<FMapState> NextState;
 };
