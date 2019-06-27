@@ -18,8 +18,3 @@ DerivedDataCache
 # Ignore VIM temporary files
 *.swp
 
-# Ignore UE4 Starter Content
-Content/StarterContent
-
-# Ignore whatever this temp folder is
-enc_temp_folder

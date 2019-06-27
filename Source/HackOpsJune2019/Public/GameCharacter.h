@@ -6,9 +6,6 @@
 #include "UObject/NoExportTypes.h"
 #include "Action.h"
 #include "Item.h"
-
-#include "GameFramework/Actor.h"
-
 #include "GameCharacter.generated.h"
 
 struct FMapState;
@@ -18,12 +15,9 @@ USTRUCT(BlueprintType)
 struct FGameCharacter
 {
 	GENERATED_USTRUCT_BODY()
-	
-public:
-	FGameCharacter() {}
-	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room);
 
-	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith);
+	FGameCharacter() {}
+	FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom);
 
 	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
@@ -32,5 +26,4 @@ public:
 	TSharedPtr<FItem> HeldItem;
 	bool IsDead = false;
 	FString Name;
-	TSubclassOf<class AActor> GameCharacterBP;
 };
