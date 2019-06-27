@@ -6,6 +6,7 @@
 #include "UObject/NoExportTypes.h"
 #include "Action.h"
 #include "Item.h"
+#include "GameFramework/Actor.h"
 #include "GameCharacter.generated.h"
 
 struct FMapState;
