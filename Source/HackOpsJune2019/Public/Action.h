@@ -29,6 +29,7 @@ struct FInteractionAction
 
 	//For specific action types, nullptr if not taking that action
 	TSharedPtr<FItem> ItemActingOn;
-	FGameCharacter* CharacterToKill;
+	TSharedPtr<FGameCharacter> CharacterToKill;
+	FString FlavourText;
 };
 
