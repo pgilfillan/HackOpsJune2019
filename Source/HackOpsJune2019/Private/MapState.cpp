@@ -3,7 +3,6 @@
 #include "Room.h"
 #include "RandomStream.h"
 
-// Do a deep copy to keep separation between simulation runs
 FMapState::FMapState(const FMapState& Other)
 {
 	// Copy rooms

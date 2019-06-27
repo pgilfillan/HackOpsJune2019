@@ -2,9 +2,6 @@
 #include "GameCharacter.h"
 #include "Action.h"
 #include "Room.h"
-#include "GameCharacter.h"
-#include "Action.h"
-#include "Room.h"
 #include "Item.h"
 
 TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState)
@@ -112,16 +109,4 @@ FMapState ASimulationController::DummyInitState()
 	State.Rooms.Emplace(NewRoom2->Name, NewRoom2);
 
 	return State;
-}
-
-void ASimulationController::ResetSimulationState(
-	int Seed,
-	TArray<FString> CharacterNames,
-	TArray<TSubclassOf<AActor>> CharacterBPs,
-	TArray<FString> RoomNames,
-	TArray<FVector> RoomLocations
-)
-{
-	MapState.GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations);
-	MapState.SpawnAllCharacterBlueprint( this );
 }

@@ -31,5 +31,6 @@ public:
 	TSharedPtr<FItem> HeldItem;
 	bool IsDead = false;
 	FString Name;
+
 	TSubclassOf<class AActor> GameCharacterBP;
 };

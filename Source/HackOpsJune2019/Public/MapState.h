@@ -4,10 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Action.h"
-#include "Room.h"
-
-#include "GameFramework/Actor.h"
-
 #include "MapState.generated.h"
 
 struct FGameCharacter;
