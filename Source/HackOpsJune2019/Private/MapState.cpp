@@ -14,6 +14,6 @@ FMapState::FMapState(const FMapState& other)
 	for (const auto& OtherRoom : other.Rooms)
 	{
 		auto RoomCopy = MakeShared<FRoom>(OtherRoom.ToSharedRef().Get());
-		this->Characters.Emplace(RoomCopy);
+		this->Rooms.Emplace(RoomCopy);
 	}
 }
