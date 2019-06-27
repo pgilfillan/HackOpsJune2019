@@ -1,7 +1,7 @@
+#include "SimulationController.h"
 #include "GameCharacter.h"
 #include "Action.h"
 #include "Room.h"
-#include "SimulationController.h"
 
 TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState)
 {

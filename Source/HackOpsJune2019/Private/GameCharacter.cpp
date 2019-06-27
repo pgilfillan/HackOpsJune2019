@@ -1,7 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-#include "Room.h"
 #include "GameCharacter.h"
+#include "Room.h"
 
 FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom)
 {

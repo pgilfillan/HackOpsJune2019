@@ -11,7 +11,6 @@
 struct FMapState;
 struct FRoom;
 
-// Should probably be a struct like the other classes but oh well
 USTRUCT(BlueprintType)
 struct FGameCharacter
 {
