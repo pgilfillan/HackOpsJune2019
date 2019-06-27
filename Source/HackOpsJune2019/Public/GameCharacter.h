@@ -14,7 +14,6 @@
 struct FMapState;
 struct FRoom;
 
-// Should probably be a struct like the other classes but oh well
 USTRUCT(BlueprintType)
 struct FGameCharacter
 {
@@ -28,7 +27,9 @@ public:
 
 	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
+
 	TSharedPtr<FRoom> CurrRoom;
+	TSharedPtr<FItem> HeldItem;
 	bool IsDead = false;
 	FString Name;
 	TSubclassOf<class AActor> GameCharacterBP;

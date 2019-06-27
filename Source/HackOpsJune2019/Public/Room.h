@@ -14,11 +14,15 @@ struct FRoom
 	GENERATED_USTRUCT_BODY()
 
 	FRoom() {}
+	FRoom(const FString& GivenName): Name(GivenName) {}
+	FRoom(const FRoom& Other);
 	FString Name;
-	TArray<FItem*> Items;
 	FVector Location;
 
 	TArray<UGameCharacter*> Characters;
+
+	TArray<TSharedPtr<FItem>> Items;
+	int32 NumCharactersInside = 0;
 	int32 NumAllowedInside = 10000; //Default no effective limit
 
 	// Should include a self-reference, for staying in the same room

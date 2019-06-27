@@ -7,15 +7,30 @@
 // Do a deep copy to keep separation between simulation runs
 FMapState::FMapState(const FMapState& other)
 {
-	for (const auto& OtherCharacter : other.Characters)
+	// Copy rooms
+	for (const auto& OtherRoomPair : Other.Rooms)
 	{
-		//auto CharacterCopy = MakeShared<UGameCharacter>(OtherCharacter);
-		//this->Characters.Emplace(CharacterCopy);
+		auto RoomCopy = MakeShared<FRoom>(OtherRoomPair.Value.ToSharedRef().Get());
+		this->Rooms.Emplace(RoomCopy->Name, RoomCopy);
 	}
 
-	for (const auto& OtherRoom : other.Rooms)
+	// Add adjaceny list
+	for (const auto& OtherRoomPair : Other.Rooms)
 	{
-		//this->Rooms.Emplace(MakeShared<FRoom>(OtherRoom));
+		for (const auto& Room : OtherRoomPair.Value->AdjacentRooms)
+		{
+			Rooms[OtherRoomPair.Key]->AdjacentRooms.Add(Rooms[Room->Name]);
+		}
+	}
+
+	// Copy characters
+	for (const auto& OtherCharacter : Other.Characters)
+	{
+		auto& OtherCurrRoomName = OtherCharacter->CurrRoom->Name;
+		auto& CurrRoom = Rooms[OtherCurrRoomName];
+
+		auto CharacterCopy = MakeShared<FGameCharacter>(OtherCharacter.ToSharedRef().Get(), CurrRoom);
+		this->Characters.Emplace(CharacterCopy);
 	}
 }
 

@@ -10,5 +10,7 @@ struct FItem
 {
 	GENERATED_USTRUCT_BODY()
 
+	FItem() {}
+	FItem(const FString& GivenName) : Name(GivenName) {}
 	FString Name;
 };

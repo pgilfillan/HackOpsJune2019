@@ -1,6 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "GameCharacter.h"
+#include "Room.h"
+
+FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom)
+{
+	this->HeldItem = Other.HeldItem;
+	this->IsDead = Other.IsDead;
+	this->Name = Other.Name;
+	this->CurrRoom = CurrRoom;
+}
 
 #include "Room.h"
 

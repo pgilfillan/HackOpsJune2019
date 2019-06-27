@@ -25,5 +25,7 @@ struct FMapState
 	void SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith);
 
 	TArray<TSharedPtr<FGameCharacter>> Characters;
-	TArray<TSharedPtr<FRoom>> Rooms;
+	//Index by name
+	TMap<FString, TSharedPtr<FRoom>> Rooms;
+	bool IsTerminal = false;
 };
