@@ -47,54 +47,48 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 
 	for (int i = 0; i < RoomNames.Num(); ++i)
 	{
-		FRoom NewRoom{};
-		NewRoom.Name = RoomNames[i];
-		NewRoom.Location = RoomLocations[i];
-		Rooms.Emplace(NewRoom.Name, MakeShared<FRoom>(NewRoom));
+		TSharedPtr<FRoom> NewRoom = MakeShared<FRoom>();
+		NewRoom->Name = RoomNames[i];
+		NewRoom->Location = RoomLocations[i];
+		Rooms.Emplace(NewRoom->Name, NewRoom);
 	}
 
+	auto SRand = FRandomStream(Seed);
 	for (int i = 0; i < CharacterNames.Num(); ++i)
 	{
-		auto SRand = FRandomStream(Seed);
-		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num());
-		int CurrIndex = 0;
-		for (auto& RoomPair : Rooms)
+		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num() - 1);
+		auto SelectedRoom = Rooms[RoomNames[SelectedRoomIndex]];
+
+		TSharedPtr<FGameCharacter> NewCharacter;
+		switch (CharacterNamesMap[CharacterNames[i]])
 		{
-			if (CurrIndex == SelectedRoomIndex)
-			{
-				FGameCharacter NewCharacter;
-
-				switch (CharacterNamesMap[CharacterNames[i]])
-				{
-				case Character::ColMust:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<ColMustardBehaviour>());
-					break;
-				case Character::DrBlack:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<DrBlackBehaviour>());
-					break;
-				case Character::MrsPeac:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<MrsPeacockBehaviour>());
-					break;
-				case Character::MrsWhite:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<MrsWhiteBehaviour>());
-					break;
-				case Character::MsScar:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<MissScarletBehaviour>());
-					break;
-				case Character::ProfPlum:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<ProfPlumBehaviour>());
-					break;
-				case Character::RevGreen:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<RevGreenBehaviour>());
-					break;
-				default:
-					UE_LOG(LogTemp, Error, TEXT("FMapState::GenerateMapState: Unable to recognise character name"));
-					break;
-				}
-
-				Characters.Add(MakeShared<FGameCharacter>(NewCharacter));
-			}
+		case Character::ColMust:
+			NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom, MakeShared<ColMustardBehaviour>());
+			break;
+		case Character::DrBlack:
+			NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom, MakeShared<DrBlackBehaviour>());
+			break;
+		case Character::MrsPeac:
+			NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom, MakeShared<MrsPeacockBehaviour>());
+			break;
+		case Character::MrsWhite:
+			NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom, MakeShared<MrsWhiteBehaviour>());
+			break;
+		case Character::MsScar:
+			NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom, MakeShared<MissScarletBehaviour>());
+			break;
+		case Character::ProfPlum:
+			NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom, MakeShared<ProfPlumBehaviour>());
+			break;
+		case Character::RevGreen:
+			NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom, MakeShared<RevGreenBehaviour>());
+			break;
+		default:
+			UE_LOG(LogTemp, Error, TEXT("FMapState::GenerateMapState: Unable to recognise character name"));
+			break;
 		}
+
+		Characters.Add((NewCharacter));
 	}
 }
 
@@ -102,6 +96,6 @@ void FMapState::SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith)
 {
 	for (int i = 0; i < Characters.Num(); ++i)
 	{
-		Characters[i]->SpawnCharacterBlueprint(ActorToSpawnWith);
+		Characters[i]->SpawnCharacterBlueprint(ActorToSpawnWith, i );
 	}
 }

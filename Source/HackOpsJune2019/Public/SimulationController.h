@@ -14,11 +14,14 @@ class HACKOPSJUNE2019_API ASimulationController : public AActor
 	
 public:
 	UFUNCTION(BlueprintCallable)
-	static TArray<FMapState> SimulateFrom(const FMapState& InitState);
+	TArray<FMapState> SimulateFrom(const FMapState& InitState);
 
-	UFUNCTION(BlueprintCallable)
-	static FMapState GetInitState();
+	UFUNCTION(BlueprintCallable, Category = "Simulation")
+	void ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations);
+
 
 private:
 	const int MaxMoves = 20; //to change
+
+	FMapState MapState{};
 };

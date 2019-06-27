@@ -23,7 +23,7 @@ public:
 	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room, TSharedPtr<CharacterBehaviour> GivenBehaviour);
 	FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom);
 
-	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith);
+	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith, int verticalOffset);
 
 	TSharedPtr<FRoom> CurrRoom;
 	TSharedPtr<FItem> HeldItem;
