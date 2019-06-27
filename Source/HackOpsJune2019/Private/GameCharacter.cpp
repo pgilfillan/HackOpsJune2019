@@ -9,6 +9,33 @@ FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> Cu
 	this->CurrRoom = CurrRoom;
 }
 
+#include "Room.h"
+
+#include "Engine/World.h"
+
+FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> Room) :
+	CurrRoom(Room),
+	Name(Name),
+	GameCharacterBP(GameCharacterBP)
+{
+}
+
+
+void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
+{
+	UWorld* world = ActorToSpawnWith->GetWorld();
+	if (world)
+	{
+		FActorSpawnParameters SpawnParameters{};
+		SpawnParameters.Owner = ActorToSpawnWith;
+		SpawnParameters.Name = FName(*Name);
+		const FVector SpawnLocation = CurrRoom->Location;
+		const FRotator SpawnRotation{};
+		world->SpawnActor(GameCharacterBP, &SpawnLocation, &SpawnRotation, SpawnParameters);
+	}
+}
+
+
 TArray<TSharedPtr<FRoom>> FGameCharacter::GetPrioritisedMoveActions(const FMapState& State)
 {
 	//TODO: give priority to particular rooms based on motivation
