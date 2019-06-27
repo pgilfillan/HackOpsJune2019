@@ -1,4 +1,4 @@
-#include "ColMustard.h"
+#include "CharacterBehaviour.h"
 #include "GameCharacter.h"
 
 TArray<TSharedPtr<FRoom>> ColMustardBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)

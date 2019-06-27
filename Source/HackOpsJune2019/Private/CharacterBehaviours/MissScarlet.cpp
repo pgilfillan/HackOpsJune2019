@@ -1,4 +1,4 @@
-#include "MissScarlet.h"
+#include "CharacterBehaviour.h"
 #include "GameCharacter.h"
 
 TArray<TSharedPtr<FRoom>> MissScarletBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)

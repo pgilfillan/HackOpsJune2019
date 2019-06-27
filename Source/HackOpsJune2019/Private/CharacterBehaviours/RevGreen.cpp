@@ -1,4 +1,4 @@
-#include "RevGreen.h"
+#include "CharacterBehaviour.h"
 #include "GameCharacter.h"
 
 TArray<TSharedPtr<FRoom>> RevGreenBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)

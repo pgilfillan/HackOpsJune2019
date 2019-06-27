@@ -1,4 +1,4 @@
-#include "ProfPlum.h"
+#include "CharacterBehaviour.h"
 #include "GameCharacter.h"
 
 TArray<TSharedPtr<FRoom>> ProfPlumBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)

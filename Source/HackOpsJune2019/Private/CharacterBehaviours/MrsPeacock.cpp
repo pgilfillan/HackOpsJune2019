@@ -1,4 +1,4 @@
-#include "MrsPeacock.h"
+#include "CharacterBehaviour.h"
 #include "GameCharacter.h"
 
 TArray<TSharedPtr<FRoom>> MrsPeacockBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)
