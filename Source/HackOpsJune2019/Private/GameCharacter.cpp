@@ -17,7 +17,7 @@ FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP
 {
 }
 
-void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
+void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith, int verticalOffset)
 {
 	UWorld* world = ActorToSpawnWith->GetWorld();
 	if (world)
@@ -25,7 +25,9 @@ void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
 		FActorSpawnParameters SpawnParameters{};
 		SpawnParameters.Owner = ActorToSpawnWith;
 		SpawnParameters.Name = FName(*Name);
-		const FVector SpawnLocation = CurrRoom->Location;
+
+		// Vertical offset stops characters from looking strange when moving through each other
+		const FVector SpawnLocation = FVector{ CurrRoom->Location.X, CurrRoom->Location.Y, CurrRoom->Location.Z + verticalOffset };
 		const FRotator SpawnRotation{};
 		world->SpawnActor(GameCharacterBP, &SpawnLocation, &SpawnRotation, SpawnParameters);
 	}
