@@ -7,12 +7,13 @@ FMapState::FMapState(const FMapState& other)
 {
 	for (const auto& OtherCharacter : other.Characters)
 	{
-		//auto CharacterCopy = MakeShared<UGameCharacter>(OtherCharacter);
-		//this->Characters.Emplace(CharacterCopy);
+		auto CharacterCopy = MakeShared<FGameCharacter>(OtherCharacter.ToSharedRef().Get());
+		this->Characters.Emplace(CharacterCopy);
 	}
 
 	for (const auto& OtherRoom : other.Rooms)
 	{
-		//this->Rooms.Emplace(MakeShared<FRoom>(OtherRoom));
+		auto RoomCopy = MakeShared<FGameCharacter>(OtherRoom.ToSharedRef().Get());
+		this->Characters.Emplace(RoomCopy);
 	}
 }
