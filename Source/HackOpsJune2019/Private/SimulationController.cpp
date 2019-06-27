@@ -26,6 +26,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState
 				if (DesiredRoom->NumCharactersInside + 1 < DesiredRoom->NumAllowedInside)
 				{
 					Character->CurrRoom = DesiredRoom;
+					DesiredRoom->NumCharactersInside++;
 				}
 			}
 

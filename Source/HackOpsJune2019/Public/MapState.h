@@ -18,6 +18,7 @@ struct FMapState
 	FMapState(const FMapState& other);
 
 	TArray<TSharedPtr<FGameCharacter>> Characters;
-	TArray<TSharedPtr<FRoom>> Rooms;
+	//Index by name
+	TMap<FString, TSharedPtr<FRoom>> Rooms;
 	bool IsTerminal = false;
 };
