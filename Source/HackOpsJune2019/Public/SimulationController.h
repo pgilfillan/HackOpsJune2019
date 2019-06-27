@@ -16,6 +16,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool SimulateFrom(const FMapState& InitState);
 
+	UFUNCTION(BlueprintCallable, Category="Simulation")
+	void ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations);
+
 private:
 	const int MaxMoves = 20; //to change
+
+	FMapState MapState{};
 };

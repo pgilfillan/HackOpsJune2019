@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Action.h"
 #include "Room.h"
+
+#include "GameFramework/Actor.h"
+
 #include "MapState.generated.h"
 
 struct FGameCharacter;
@@ -17,7 +20,9 @@ struct FMapState
 
 	FMapState() {}
 	FMapState(const FMapState& other);
-	FMapState(int Seed, TArray<FString>CharacterNames, TArray<TSharedPtr<FRoom>> Rooms);
+
+	void GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations);
+	void SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith);
 
 	TArray<TSharedPtr<FGameCharacter>> Characters;
 	TArray<TSharedPtr<FRoom>> Rooms;

@@ -16,7 +16,7 @@ struct FRoom
 	FRoom() {}
 	FString Name;
 	TArray<FItem*> Items;
-	FVector Position;
+	FVector Location;
 
 	TArray<UGameCharacter*> Characters;
 	int32 NumAllowedInside = 10000; //Default no effective limit

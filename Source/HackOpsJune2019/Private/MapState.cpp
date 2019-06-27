@@ -19,15 +19,29 @@ FMapState::FMapState(const FMapState& other)
 	}
 }
 
-FMapState::FMapState(int Seed, TArray<FString>CharacterNames, TArray<TSharedPtr<FRoom>> Rooms) :
-	Rooms(Rooms)
+void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations)
 {
-	auto SRand = FRandomStream(Seed);
+	for (int i = 0; i < RoomNames.Num(); ++i)
+	{
+		FRoom NewRoom{};
+		NewRoom.Name = RoomNames[i];
+		NewRoom.Location = RoomLocations[i];
+		Rooms.Add(MakeShared<FRoom>(NewRoom));
+	}
 
 	for (int i = 0; i < CharacterNames.Num(); ++i)
 	{
+		auto SRand = FRandomStream(Seed);
 		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num());
-		auto NewCharacter = FGameCharacter(CharacterNames[i], Rooms[SelectedRoomIndex]);
+		auto NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], Rooms[SelectedRoomIndex]);
 		Characters.Add(MakeShared<FGameCharacter>(NewCharacter));
+	}
+}
+
+void FMapState::SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith)
+{
+	for (int i = 0; i < Characters.Num(); ++i)
+	{
+		Characters[i]->SpawnCharacterBlueprint(ActorToSpawnWith);
 	}
 }

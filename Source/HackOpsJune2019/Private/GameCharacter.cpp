@@ -1,13 +1,31 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Room.h"
 #include "GameCharacter.h"
 
-FGameCharacter::FGameCharacter(FString name, TSharedPtr<FRoom> room) :
-	CurrRoom(room),
-	Name(name)
+#include "Room.h"
+
+#include "Engine/World.h"
+
+FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> Room) :
+	CurrRoom(Room),
+	Name(Name),
+	GameCharacterBP(GameCharacterBP)
 {
-	// Spawn Blueprint actor here.
+}
+
+
+void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
+{
+	UWorld* world = ActorToSpawnWith->GetWorld();
+	if (world)
+	{
+		FActorSpawnParameters SpawnParameters{};
+		SpawnParameters.Owner = ActorToSpawnWith;
+		SpawnParameters.Name = FName(*Name);
+		const FVector SpawnLocation = CurrRoom->Location;
+		const FRotator SpawnRotation{};
+		world->SpawnActor(GameCharacterBP, &SpawnLocation, &SpawnRotation, SpawnParameters);
+	}
 }
 
 

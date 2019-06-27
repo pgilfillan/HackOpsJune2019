@@ -77,3 +77,15 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 
 	return false;
 }
+
+void ASimulationController::ResetSimulationState(
+	int Seed,
+	TArray<FString> CharacterNames,
+	TArray<TSubclassOf<AActor>> CharacterBPs,
+	TArray<FString> RoomNames,
+	TArray<FVector> RoomLocations
+)
+{
+	MapState.GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations);
+	MapState.SpawnAllCharacterBlueprint( this );
+}
