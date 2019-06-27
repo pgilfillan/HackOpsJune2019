@@ -21,6 +21,8 @@ public:
 	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
 	TSharedPtr<FRoom> CurrRoom;
+	TSharedPtr<FItem> HeldItem;
+
 	bool IsDead = false;
 	FString Name;
 };

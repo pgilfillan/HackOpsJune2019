@@ -19,4 +19,5 @@ struct FMapState
 
 	TArray<TSharedPtr<FGameCharacter>> Characters;
 	TArray<TSharedPtr<FRoom>> Rooms;
+	bool IsTerminal = false;
 };

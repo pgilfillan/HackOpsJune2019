@@ -3,14 +3,16 @@
 #include "Room.h"
 #include "SimulationController.h"
 
-bool ASimulationController::SimulateFrom(const FMapState& InitState)
+TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState)
 {
+	TArray<FMapState> StateHistory;
 	FMapState CurrState(InitState);
-	bool TerminalState = false;
-	
+
 	int ElapsedMoves = 0;
-	while (!TerminalState && ElapsedMoves < MaxMoves)
+	while (ElapsedMoves < MaxMoves)
 	{
+		StateHistory.Add(CurrState);
+
 		// Get move actions
 		for (auto& Character : CurrState.Characters)
 		{
@@ -21,7 +23,7 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 			{
 				auto& DesiredRoom = PrioritisedMoveActions[i];
 				//TODO: check in a better way (this depends on order)
-				if (DesiredRoom->Characters.Num() + 1 < DesiredRoom->NumAllowedInside)
+				if (DesiredRoom->NumCharactersInside + 1 < DesiredRoom->NumAllowedInside)
 				{
 					Character->CurrRoom = DesiredRoom;
 				}
@@ -50,7 +52,7 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 					if (Character->CurrRoom == DesiredAction.CharacterToKill->CurrRoom)
 					{
 						DesiredAction.CharacterToKill->IsDead = true;
-						TerminalState = true;
+						CurrState.IsTerminal = true;
 					}
 				}
 
@@ -65,14 +67,14 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 			}
 		}
 
+		if (CurrState.IsTerminal)
+		{
+			break;
+		}
+
+		CurrState = FMapState(CurrState);
 		ElapsedMoves++;
 	}
 
-	if (ElapsedMoves == MaxMoves)
-	{
-		//Reached end of night with goal succeeded
-		return true;
-	}
-
-	return false;
+	return StateHistory;
 }

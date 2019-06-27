@@ -14,7 +14,7 @@ class HACKOPSJUNE2019_API ASimulationController : public AActor
 	
 public:
 	UFUNCTION(BlueprintCallable)
-	bool SimulateFrom(const FMapState& InitState);
+	TArray<FMapState> SimulateFrom(const FMapState& InitState);
 
 private:
 	const int MaxMoves = 20; //to change

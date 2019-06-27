@@ -15,8 +15,8 @@ struct FRoom
 
 	FRoom() {}
 	FString Name;
-	TArray<FItem*> Items;
-	TArray<UGameCharacter*> Characters;
+	TArray<TSharedPtr<FItem>> Items;
+	int32 NumCharactersInside = 0;
 	int32 NumAllowedInside = 10000; //Default no effective limit
 
 	// Should include a self-reference, for staying in the same room
