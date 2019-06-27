@@ -14,6 +14,7 @@ struct FRoom
 	GENERATED_USTRUCT_BODY()
 
 	FRoom() {}
+	FRoom(const FRoom& Other);
 	FString Name;
 	TArray<TSharedPtr<FItem>> Items;
 	int32 NumCharactersInside = 0;

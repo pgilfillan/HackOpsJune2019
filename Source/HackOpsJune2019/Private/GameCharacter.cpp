@@ -3,6 +3,14 @@
 #include "Room.h"
 #include "GameCharacter.h"
 
+FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom)
+{
+	this->HeldItem = Other.HeldItem;
+	this->IsDead = Other.IsDead;
+	this->Name = Other.Name;
+	this->CurrRoom = CurrRoom;
+}
+
 TArray<TSharedPtr<FRoom>> FGameCharacter::GetPrioritisedMoveActions(const FMapState& State)
 {
 	//TODO: give priority to particular rooms based on motivation

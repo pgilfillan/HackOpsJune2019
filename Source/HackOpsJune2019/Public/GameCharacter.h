@@ -16,13 +16,15 @@ USTRUCT(BlueprintType)
 struct FGameCharacter
 {
 	GENERATED_USTRUCT_BODY()
-	
-public:
+
+	FGameCharacter() {}
+	FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom);
+
 	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
+
 	TSharedPtr<FRoom> CurrRoom;
 	TSharedPtr<FItem> HeldItem;
-
 	bool IsDead = false;
 	FString Name;
 };
