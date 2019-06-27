@@ -67,25 +67,25 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 				switch (CharacterNamesMap[CharacterNames[i]])
 				{
 				case Character::ColMust:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new ColMustardBehaviour());
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<ColMustardBehaviour>());
 					break;
 				case Character::DrBlack:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new DrBlackBehaviour());
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<DrBlackBehaviour>());
 					break;
 				case Character::MrsPeac:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new MrsPeacockBehaviour());
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<MrsPeacockBehaviour>());
 					break;
 				case Character::MrsWhite:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new MrsWhiteBehaviour());
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<MrsWhiteBehaviour>());
 					break;
 				case Character::MsScar:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new MissScarletBehaviour());
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<MissScarletBehaviour>());
 					break;
 				case Character::ProfPlum:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new ProfPlumBehaviour());
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<ProfPlumBehaviour>());
 					break;
 				case Character::RevGreen:
-					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new RevGreenBehaviour());
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, MakeShared<RevGreenBehaviour>());
 					break;
 				default:
 					UE_LOG(LogTemp, Error, TEXT("FMapState::GenerateMapState: Unable to recognise character name"));

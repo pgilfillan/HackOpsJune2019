@@ -8,20 +8,16 @@ FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> Cu
 	this->HeldItem = Other.HeldItem;
 	this->IsDead = Other.IsDead;
 	this->Name = Other.Name;
+	this->Behaviour = Other.Behaviour;
 	this->CurrRoom = CurrRoom;
 }
 
-FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> Room, CharacterBehaviour* GivenBehaviour) :
+FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> Room, TSharedPtr<CharacterBehaviour> GivenBehaviour) :
 	CurrRoom(Room),
 	Name(Name),
 	GameCharacterBP(GameCharacterBP),
 	Behaviour(GivenBehaviour)
 {
-}
-
-FGameCharacter::~FGameCharacter()
-{
-	delete Behaviour;
 }
 
 void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)

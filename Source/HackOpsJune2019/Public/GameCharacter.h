@@ -20,8 +20,7 @@ struct FGameCharacter
 	
 public:
 	FGameCharacter() {}
-	virtual ~FGameCharacter();
-	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room, CharacterBehaviour* GivenBehaviour);
+	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room, TSharedPtr<CharacterBehaviour> GivenBehaviour);
 	FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom);
 
 	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith);
@@ -31,5 +30,5 @@ public:
 	bool IsDead = false;
 	FString Name;
 	TSubclassOf<class AActor> GameCharacterBP;
-	CharacterBehaviour* Behaviour;
+	TSharedPtr<CharacterBehaviour> Behaviour;
 };
