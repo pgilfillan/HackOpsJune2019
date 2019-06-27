@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Action.h"
+#include "Room.h"
 #include "MapState.generated.h"
 
 struct FGameCharacter;
@@ -16,6 +17,7 @@ struct FMapState
 
 	FMapState() {}
 	FMapState(const FMapState& other);
+	FMapState(int Seed, TArray<FString>CharacterNames, TArray<TSharedPtr<FRoom>> Rooms);
 
 	TArray<TSharedPtr<FGameCharacter>> Characters;
 	TArray<TSharedPtr<FRoom>> Rooms;

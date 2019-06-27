@@ -18,6 +18,9 @@ struct FGameCharacter
 	GENERATED_USTRUCT_BODY()
 	
 public:
+	FGameCharacter() {}
+	FGameCharacter(FString name, TSharedPtr<FRoom> room);
+
 	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
 	TSharedPtr<FRoom> CurrRoom;

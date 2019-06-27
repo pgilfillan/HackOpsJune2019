@@ -1,7 +1,8 @@
+#include "SimulationController.h"
+
 #include "GameCharacter.h"
 #include "Action.h"
 #include "Room.h"
-#include "SimulationController.h"
 
 bool ASimulationController::SimulateFrom(const FMapState& InitState)
 {
