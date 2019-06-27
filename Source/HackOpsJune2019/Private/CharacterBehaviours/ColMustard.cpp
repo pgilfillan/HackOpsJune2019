@@ -1,4 +1,4 @@
-#include "ColMustard.h"
+#include "CharacterBehaviour.h"
 #include "GameCharacter.h"
 
 TArray<TSharedPtr<FRoom>> ColMustardBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)
@@ -20,12 +20,19 @@ TArray<FInteractionAction> ColMustardBehaviour::GetPrioritisedInteractionActions
 			switch (CharacterNamesMap[OtherCharacter->Name])
 			{
 			case Character::ColMust:
+				break;
 			case Character::DrBlack:
+				break;
 			case Character::MrsPeac:
+				break;
 			case Character::MrsWhite:
+				break;
 			case Character::MsScar:
+				break;
 			case Character::ProfPlum:
+				break;
 			case Character::RevGreen:
+				break;
 			default:
 				break;
 			}
