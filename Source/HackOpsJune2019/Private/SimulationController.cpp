@@ -5,14 +5,14 @@
 
 bool ASimulationController::SimulateFrom(const FMapState& InitState)
 {
-	auto CurrState = MakeShared<FMapState>(InitState);
+	FMapState CurrState(InitState);
 	bool TerminalState = false;
 	
 	int ElapsedMoves = 0;
 	while (!TerminalState && ElapsedMoves < MaxMoves)
 	{
 		// Get move actions
-		for (auto& Character : CurrState->Characters)
+		for (auto& Character : CurrState.Characters)
 		{
 			auto PrioritisedMoveActions = Character->GetPrioritisedMoveActions(CurrState);
 
@@ -35,9 +35,9 @@ bool ASimulationController::SimulateFrom(const FMapState& InitState)
 		}
 
 		// Get interaction actions
-		for (auto& Character : CurrState->Characters)
+		for (auto& Character : CurrState.Characters)
 		{
-			auto PlayerPrioritisedActions = Character->GetPrioritisedInteractionActions(CurrState.Get());
+			auto PlayerPrioritisedActions = Character->GetPrioritisedInteractionActions(CurrState);
 
 			int i = 0;
 			for (; i < PlayerPrioritisedActions.Num(); ++i)

@@ -12,17 +12,15 @@ struct FMapState;
 struct FRoom;
 
 // Should probably be a struct like the other classes but oh well
-UCLASS()
-class HACKOPSJUNE2019_API UGameCharacter : public UObject
+USTRUCT(BlueprintType)
+struct FGameCharacter
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 	
 public:
-	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(TSharedRef<FMapState> State);
-	TArray<FInteractionAction> GetPrioritisedInteractionActions(FMapState& State);
+	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
+	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
 	TSharedPtr<FRoom> CurrRoom;
 	bool IsDead = false;
-
-private:
 	FString Name;
 };

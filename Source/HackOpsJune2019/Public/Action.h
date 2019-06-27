@@ -18,7 +18,7 @@ enum class InteractionActionType
 	Nothing
 };
 
-class UGameCharacter;
+struct FGameCharacter;
 
 USTRUCT(BlueprintType)
 struct FInteractionAction
@@ -29,6 +29,6 @@ struct FInteractionAction
 
 	//For specific action types, nullptr if not taking that action
 	TSharedPtr<FItem> ItemActingOn;
-	UGameCharacter* CharacterToKill;
+	FGameCharacter* CharacterToKill;
 };
 

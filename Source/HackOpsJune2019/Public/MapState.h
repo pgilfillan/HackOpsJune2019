@@ -6,7 +6,7 @@
 #include "Action.h"
 #include "MapState.generated.h"
 
-class UGameCharacter;
+struct FGameCharacter;
 struct FRoom;
 
 USTRUCT(BlueprintType)
@@ -17,6 +17,6 @@ struct FMapState
 	FMapState() {}
 	FMapState(const FMapState& other);
 
-	TArray<TSharedPtr<UGameCharacter>> Characters;
+	TArray<TSharedPtr<FGameCharacter>> Characters;
 	TArray<TSharedPtr<FRoom>> Rooms;
 };
