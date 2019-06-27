@@ -55,6 +55,6 @@ void FMapState::SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith)
 {
 	for (int i = 0; i < Characters.Num(); ++i)
 	{
-		Characters[i]->SpawnCharacterBlueprint(ActorToSpawnWith);
+		Characters[i]->SpawnCharacterBlueprint(ActorToSpawnWith, i );
 	}
 }

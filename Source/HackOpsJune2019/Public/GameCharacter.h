@@ -22,7 +22,7 @@ public:
 	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room);
 	FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom);
 
-	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith);
+	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith, int verticalOffset);
 
 	TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State);
 	TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State);
