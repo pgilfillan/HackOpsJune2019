@@ -60,6 +60,12 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 		auto SelectedRoom = Rooms[RoomNames[SelectedRoomIndex]];
 
 		TSharedPtr<FGameCharacter> NewCharacter;
+		if (CharacterNamesMap.Find(CharacterNames[i]) == nullptr)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Unable to find character name: %s"), *CharacterNames[i]);
+			continue;
+		}
+
 		switch (CharacterNamesMap[CharacterNames[i]])
 		{
 		case Character::ColMust:
