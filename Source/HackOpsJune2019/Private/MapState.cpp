@@ -36,25 +36,18 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 {
 	for (int i = 0; i < RoomNames.Num(); ++i)
 	{
-		FRoom NewRoom{};
-		NewRoom.Name = RoomNames[i];
-		NewRoom.Location = RoomLocations[i];
-		Rooms.Emplace(NewRoom.Name, MakeShared<FRoom>(NewRoom));
+		TSharedPtr<FRoom> NewRoom = MakeShared<FRoom>();
+		NewRoom->Name = RoomNames[i];
+		NewRoom->Location = RoomLocations[i];
+		Rooms.Emplace(NewRoom->Name, NewRoom);
 	}
-
+	auto SRand = FRandomStream();
 	for (int i = 0; i < CharacterNames.Num(); ++i)
 	{
-		auto SRand = FRandomStream(Seed);
-		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num());
-		int CurrIndex = 0;
-		for (auto& RoomPair : Rooms)
-		{
-			if (CurrIndex == SelectedRoomIndex)
-			{
-				auto NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value);
-				Characters.Add(MakeShared<FGameCharacter>(NewCharacter));
-			}
-		}
+		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num() - 1 );
+		auto SelectedRoom = Rooms[RoomNames[SelectedRoomIndex]];
+		TSharedPtr<FGameCharacter> NewCharacter = MakeShared<FGameCharacter>(CharacterNames[i], CharacterBPs[i], SelectedRoom);
+		Characters.Add(NewCharacter);
 	}
 }
 
