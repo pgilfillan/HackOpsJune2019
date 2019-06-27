@@ -5,14 +5,18 @@
 #include "CharacterBehaviours/CharacterBehaviour.h"
 #include "Item.h"
 
-TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState)
+TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 {
 	TArray<FMapState> StateHistory;
 	FMapState CurrState(InitState);
-
+	TSharedPtr<FMapState> CurrStatePtr = MakeShareable(&CurrState);
+	InitState.NextState = CurrStatePtr;
+	CurrState.ParentState = MakeShareable(&InitState);
+	
 	int ElapsedMoves = 0;
 	while (ElapsedMoves < MaxMoves)
 	{
+		auto test = CurrState;
 		StateHistory.Add(CurrState);
 
 		// Get move actions
@@ -85,7 +89,12 @@ TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState
 			break;
 		}
 
+		auto& PrevStatePtr = CurrStatePtr;
 		CurrState = FMapState(CurrState);
+		CurrStatePtr = MakeShareable(&CurrState);
+		PrevStatePtr->NextState = CurrStatePtr;
+		CurrState.ParentState = PrevStatePtr;
+
 		ElapsedMoves++;
 	}
 
@@ -100,6 +109,6 @@ void ASimulationController::ResetSimulationState(
 	TArray<FVector> RoomLocations
 )
 {
-	MapState.GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations);
-	MapState.SpawnAllCharacterBlueprint(this);
+	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations);
+	RootMapState->SpawnAllCharacterBlueprint(this);
 }
