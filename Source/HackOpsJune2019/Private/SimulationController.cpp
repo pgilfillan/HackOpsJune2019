@@ -22,16 +22,6 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 		// Get move actions
 		for (auto& Character : CurrState.Characters)
 		{
-			if (!Character.IsValid())
-			{
-				UE_LOG(LogTemp, Error, TEXT("ASimulationController::SimulateFrom: Character null, moves: %d"), ElapsedMoves);
-			}
-
-			if (!Character->Behaviour.IsValid())
-			{
-				UE_LOG(LogTemp, Error, TEXT("ASimulationController::SimulateFrom: Behaviour null, moves: %d"), ElapsedMoves);
-			}
-
 			auto PrioritisedMoveActions = Character->Behaviour->GetPrioritisedMoveActions(CurrState, Character.Get());
 
 			int i = 0;
