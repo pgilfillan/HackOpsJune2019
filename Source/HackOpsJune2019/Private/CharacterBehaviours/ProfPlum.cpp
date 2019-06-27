@@ -20,12 +20,19 @@ TArray<FInteractionAction> ProfPlumBehaviour::GetPrioritisedInteractionActions(c
 			switch (CharacterNamesMap[OtherCharacter->Name])
 			{
 			case Character::ColMust:
+				break;
 			case Character::DrBlack:
+				break;
 			case Character::MrsPeac:
+				break;
 			case Character::MrsWhite:
+				break;
 			case Character::MsScar:
+				break;
 			case Character::ProfPlum:
+				break;
 			case Character::RevGreen:
+				break;
 			default:
 				break;
 			}

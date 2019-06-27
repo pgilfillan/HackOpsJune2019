@@ -1,6 +1,7 @@
 #include "MapState.h"
 #include "GameCharacter.h"
 #include "Room.h"
+#include "CharacterBehaviours/CharacterBehaviour.h"
 #include "RandomStream.h"
 
 FMapState::FMapState(const FMapState& Other)
@@ -34,6 +35,16 @@ FMapState::FMapState(const FMapState& Other)
 
 void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations)
 {
+	// TODO: this is a duplicate of the one in CharacterBehaviour.h, need to put in a common place
+	TMap<FString, Character> CharacterNamesMap;
+	CharacterNamesMap.Emplace(FString(TEXT("Colonel Mustard")), Character::ColMust);
+	CharacterNamesMap.Emplace(FString(TEXT("Miss Scarlet")), Character::MsScar);
+	CharacterNamesMap.Emplace(FString(TEXT("Professor Plum")), Character::ProfPlum);
+	CharacterNamesMap.Emplace(FString(TEXT("Reverend Green")), Character::RevGreen);
+	CharacterNamesMap.Emplace(FString(TEXT("Mrs White")), Character::MrsWhite);
+	CharacterNamesMap.Emplace(FString(TEXT("Mrs Peacock")), Character::MrsPeac);
+	CharacterNamesMap.Emplace(FString(TEXT("Dr Black")), Character::DrBlack);
+
 	for (int i = 0; i < RoomNames.Num(); ++i)
 	{
 		FRoom NewRoom{};
@@ -51,7 +62,36 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 		{
 			if (CurrIndex == SelectedRoomIndex)
 			{
-				auto NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value);
+				FGameCharacter NewCharacter;
+
+				switch (CharacterNamesMap[CharacterNames[i]])
+				{
+				case Character::ColMust:
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new ColMustardBehaviour());
+					break;
+				case Character::DrBlack:
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new DrBlackBehaviour());
+					break;
+				case Character::MrsPeac:
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new MrsPeacockBehaviour());
+					break;
+				case Character::MrsWhite:
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new MrsWhiteBehaviour());
+					break;
+				case Character::MsScar:
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new MissScarletBehaviour());
+					break;
+				case Character::ProfPlum:
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new ProfPlumBehaviour());
+					break;
+				case Character::RevGreen:
+					NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value, new RevGreenBehaviour());
+					break;
+				default:
+					UE_LOG(LogTemp, Error, TEXT("FMapState::GenerateMapState: Unable to recognise character name"));
+					break;
+				}
+
 				Characters.Add(MakeShared<FGameCharacter>(NewCharacter));
 			}
 		}

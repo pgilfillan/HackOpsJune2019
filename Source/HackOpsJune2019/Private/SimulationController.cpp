@@ -2,6 +2,7 @@
 #include "GameCharacter.h"
 #include "Action.h"
 #include "Room.h"
+#include "CharacterBehaviours/CharacterBehaviour.h"
 #include "Item.h"
 
 TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState)
@@ -17,7 +18,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState
 		// Get move actions
 		for (auto& Character : CurrState.Characters)
 		{
-			auto PrioritisedMoveActions = Character->GetPrioritisedMoveActions(CurrState);
+			auto PrioritisedMoveActions = Character->Behaviour->GetPrioritisedMoveActions(CurrState, Character.Get());
 
 			int i = 0;
 			for (; i < PrioritisedMoveActions.Num(); ++i)
@@ -41,7 +42,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState
 		// Get interaction actions
 		for (auto& Character : CurrState.Characters)
 		{
-			auto PlayerPrioritisedActions = Character->GetPrioritisedInteractionActions(CurrState);
+			auto PlayerPrioritisedActions = Character->Behaviour->GetPrioritisedInteractionActions(CurrState, Character.Get());
 
 			int i = 0;
 			for (; i < PlayerPrioritisedActions.Num(); ++i)

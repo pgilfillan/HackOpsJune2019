@@ -13,9 +13,12 @@ enum class Character
 	DrBlack
 };
 
+// TODO: better place for this, not good to be global
+
 class CharacterBehaviour
 {
 public:
+	// Should be called somewhere before use, not the best design
 	CharacterBehaviour()
 	{
 		CharacterNamesMap.Emplace(FString(TEXT("Colonel Mustard")), Character::ColMust);
@@ -31,7 +34,6 @@ public:
 	virtual TArray<TSharedPtr<FRoom>> GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character) = 0;
 	virtual TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State, FGameCharacter* Character) = 0;
 
-	// Should be static/somewhere else but don't want to waste time
 	TMap<FString, Character> CharacterNamesMap;
 };
 

@@ -23,6 +23,7 @@ TArray<FInteractionAction> RevGreenBehaviour::GetPrioritisedInteractionActions(c
 			{
 			case Character::ColMust:
 				Action.FlavourText = FString(TEXT("You look troubled Col Mustard, still dwelling on africa?"));
+				break;
 			case Character::DrBlack:
 				break;
 			case Character::MrsPeac:
@@ -37,11 +38,13 @@ TArray<FInteractionAction> RevGreenBehaviour::GetPrioritisedInteractionActions(c
 				{
 					Action.FlavourText = FString(TEXT("One should be careful of what one says about others Mrs Peacock"));
 				}
+				break;
 			case Character::MrsWhite:
 				if (Character->CurrRoom->NumCharactersInside == 2 && OurRoom->ItemInRoom("Candlestick"))
 				{
 					Action.FlavourText = FString(TEXT("Miss white I think you dropped this. Wait a moment isn't this the missing candlesti..."));
 				}
+				break;
 			case Character::MsScar:
 				break;
 			case Character::ProfPlum:
