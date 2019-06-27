@@ -17,6 +17,8 @@ struct FRoom
 	FRoom(const FString& GivenName): Name(GivenName) {}
 	FRoom(const FRoom& Other);
 
+	bool ItemInRoom(const FString& ItemName);
+
 	FString Name;
 	FVector Location;
 	TArray<TSharedPtr<FItem>> Items;
