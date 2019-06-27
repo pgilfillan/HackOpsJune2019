@@ -16,6 +16,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<FMapState> SimulateFrom(const FMapState& InitState);
 
+	UFUNCTION(BlueprintCallable)
+	FMapState DummyInitState();
+
 private:
 	const int MaxMoves = 20; //to change
 };

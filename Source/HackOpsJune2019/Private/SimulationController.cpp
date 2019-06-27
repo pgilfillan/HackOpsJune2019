@@ -2,6 +2,7 @@
 #include "GameCharacter.h"
 #include "Action.h"
 #include "Room.h"
+#include "Item.h"
 
 TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState)
 {
@@ -78,4 +79,34 @@ TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState
 	}
 
 	return StateHistory;
+}
+
+FMapState ASimulationController::DummyInitState()
+{
+	FMapState State;
+
+	// Create items
+	auto NewItem1 = MakeShared<FItem>(FString(TEXT("Item1")));
+	auto NewItem2 = MakeShared<FItem>(FString(TEXT("Item2")));
+
+	// Create rooms
+	auto NewRoom1 = MakeShared<FRoom>(FString(TEXT("Room1")));
+	NewRoom1->Items.Add(NewItem1);
+	auto NewRoom2 = MakeShared<FRoom>(FString(TEXT("Room2")));
+	NewRoom2->Items.Add(NewItem2);
+	NewRoom1->AdjacentRooms.Add(NewRoom2);
+	NewRoom2->AdjacentRooms.Add(NewRoom1);
+
+	// Create characters
+	auto NewChar1 = MakeShared<FGameCharacter>();
+	NewChar1->CurrRoom = NewRoom1;
+	auto NewChar2 = MakeShared<FGameCharacter>();
+	NewChar2->CurrRoom = NewRoom2;
+
+	State.Characters.Add(NewChar1);
+	State.Characters.Add(NewChar2);
+	State.Rooms.Emplace(NewRoom1->Name, NewRoom1);
+	State.Rooms.Emplace(NewRoom2->Name, NewRoom2);
+
+	return State;
 }
