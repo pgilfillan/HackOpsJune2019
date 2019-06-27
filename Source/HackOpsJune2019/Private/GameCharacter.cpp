@@ -1,5 +1,6 @@
 #include "GameCharacter.h"
 #include "Room.h"
+#include "Engine/World.h"
 
 FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom)
 {
@@ -9,17 +10,12 @@ FGameCharacter::FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> Cu
 	this->CurrRoom = CurrRoom;
 }
 
-#include "Room.h"
-
-#include "Engine/World.h"
-
 FGameCharacter::FGameCharacter(FString Name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> Room) :
 	CurrRoom(Room),
 	Name(Name),
 	GameCharacterBP(GameCharacterBP)
 {
 }
-
 
 void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
 {
@@ -34,7 +30,6 @@ void FGameCharacter::SpawnCharacterBlueprint(AActor* ActorToSpawnWith)
 		world->SpawnActor(GameCharacterBP, &SpawnLocation, &SpawnRotation, SpawnParameters);
 	}
 }
-
 
 TArray<TSharedPtr<FRoom>> FGameCharacter::GetPrioritisedMoveActions(const FMapState& State)
 {

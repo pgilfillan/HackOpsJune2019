@@ -1,11 +1,10 @@
 #include "MapState.h"
 #include "GameCharacter.h"
 #include "Room.h"
-
 #include "RandomStream.h"
 
 // Do a deep copy to keep separation between simulation runs
-FMapState::FMapState(const FMapState& other)
+FMapState::FMapState(const FMapState& Other)
 {
 	// Copy rooms
 	for (const auto& OtherRoomPair : Other.Rooms)
@@ -41,15 +40,22 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 		FRoom NewRoom{};
 		NewRoom.Name = RoomNames[i];
 		NewRoom.Location = RoomLocations[i];
-		Rooms.Add(MakeShared<FRoom>(NewRoom));
+		Rooms.Emplace(NewRoom.Name, MakeShared<FRoom>(NewRoom));
 	}
 
 	for (int i = 0; i < CharacterNames.Num(); ++i)
 	{
 		auto SRand = FRandomStream(Seed);
 		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num());
-		auto NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], Rooms[SelectedRoomIndex]);
-		Characters.Add(MakeShared<FGameCharacter>(NewCharacter));
+		int CurrIndex = 0;
+		for (auto& RoomPair : Rooms)
+		{
+			if (CurrIndex == SelectedRoomIndex)
+			{
+				auto NewCharacter = FGameCharacter(CharacterNames[i], CharacterBPs[i], RoomPair.Value);
+				Characters.Add(MakeShared<FGameCharacter>(NewCharacter));
+			}
+		}
 	}
 }
 

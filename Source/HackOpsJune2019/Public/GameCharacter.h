@@ -6,9 +6,7 @@
 #include "UObject/NoExportTypes.h"
 #include "Action.h"
 #include "Item.h"
-
 #include "GameFramework/Actor.h"
-
 #include "GameCharacter.generated.h"
 
 struct FMapState;
@@ -22,6 +20,7 @@ struct FGameCharacter
 public:
 	FGameCharacter() {}
 	FGameCharacter(FString name, TSubclassOf<AActor> GameCharacterBP, TSharedPtr<FRoom> room);
+	FGameCharacter(const FGameCharacter& Other, TSharedPtr<FRoom> CurrRoom);
 
 	void SpawnCharacterBlueprint(AActor* ActorToSpawnWith);
 

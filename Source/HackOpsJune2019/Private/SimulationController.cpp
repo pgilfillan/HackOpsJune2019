@@ -1,15 +1,11 @@
 #include "SimulationController.h"
-<<<<<<< Source/HackOpsJune2019/Private/SimulationController.cpp
-
 #include "GameCharacter.h"
 #include "Action.h"
 #include "Room.h"
-=======
 #include "GameCharacter.h"
 #include "Action.h"
 #include "Room.h"
 #include "Item.h"
->>>>>>> Source/HackOpsJune2019/Private/SimulationController.cpp
 
 TArray<FMapState> ASimulationController::SimulateFrom(const FMapState& InitState)
 {
