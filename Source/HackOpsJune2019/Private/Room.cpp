@@ -12,3 +12,16 @@ FRoom::FRoom(const FRoom& Other)
 
 	//Don't add adjacent rooms of the old one, they will be added later
 }
+
+bool FRoom::ItemInRoom(const FString& ItemName)
+{
+	for (auto& Item : Items)
+	{
+		if (Item->Name == ItemName)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
