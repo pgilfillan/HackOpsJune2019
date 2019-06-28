@@ -17,10 +17,13 @@ public:
 	TArray<FMapState> SimulateFrom(FMapState& InitState);
 
 	UFUNCTION(BlueprintCallable, Category = "Simulation")
-	void ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames);
+	FMapState& ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames);
 
 	UFUNCTION(BlueprintCallable)
 	FMapState& JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps);
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeDoorOpen(UPARAM(ref) FMapState& Current, FString RoomName1, FString RoomName2, bool IsOpen);
 
 private:
 	const int MaxMoves = 20; //to change

@@ -96,7 +96,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 	return StateHistory;
 }
 
-void ASimulationController::ResetSimulationState(
+FMapState& ASimulationController::ResetSimulationState(
 	int Seed,
 	TArray<FString> CharacterNames,
 	TArray<TSubclassOf<AActor>> CharacterBPs,
@@ -107,6 +107,7 @@ void ASimulationController::ResetSimulationState(
 {
 	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames);
 	RootMapState->SpawnAllCharacterBlueprint(this);
+	return RootMapState.ToSharedRef().Get();
 }
 
 FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps)
@@ -144,4 +145,39 @@ FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int3
 	}
 
 	return Current;
+}
+
+void ASimulationController::ChangeDoorOpen(UPARAM(ref) FMapState& Current, FString RoomName1, FString RoomName2, bool IsOpen)
+{
+	if (IsOpen)
+	{
+		Current.Rooms[RoomName1]->AdjacentRooms.Add(Current.Rooms[RoomName2]);
+		Current.Rooms[RoomName2]->AdjacentRooms.Add(Current.Rooms[RoomName1]);
+	}
+	else
+	{
+		const bool bAllowShrinking = false;
+		auto& Adj1 = Current.Rooms[RoomName1]->AdjacentRooms;
+		for (int32 Index = Adj1.Num() - 1; Index >= 0; --Index)
+		{
+			if (auto Room = Adj1[Index].Pin())
+			{
+				if (Room->Name == RoomName2)
+				{
+					Adj1.RemoveAt(Index, 1, bAllowShrinking);
+				}
+			}
+		}
+		auto& Adj2 = Current.Rooms[RoomName2]->AdjacentRooms;
+		for (int32 Index = Adj2.Num() - 1; Index >= 0; --Index)
+		{
+			if (auto Room = Adj2[Index].Pin())
+			{
+				if (Room->Name == RoomName1)
+				{
+					Adj2.RemoveAt(Index, 1, bAllowShrinking);
+				}
+			}
+		}
+	}
 }
