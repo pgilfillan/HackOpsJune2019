@@ -27,4 +27,7 @@ struct FMapState
 
 	TSharedPtr<FMapState> ParentState;
 	TSharedPtr<FMapState> NextState;
+
+private:
+	void AddAdjacencies();
 };

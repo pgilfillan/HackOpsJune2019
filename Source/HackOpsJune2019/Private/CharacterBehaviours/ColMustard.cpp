@@ -3,7 +3,15 @@
 
 TArray<TSharedPtr<FRoom>> ColMustardBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)
 {
-	return Character->CurrRoom->AdjacentRooms;
+	TArray<TSharedPtr<FRoom>> Rooms;
+	for (auto& RoomWkPtr : Character->CurrRoom->AdjacentRooms)
+	{
+		if (RoomWkPtr.IsValid())
+		{
+			Rooms.Add(RoomWkPtr.Pin());
+		}
+	}
+	return Rooms;
 }
 
 TArray<FInteractionAction> ColMustardBehaviour::GetPrioritisedInteractionActions(const FMapState& State, FGameCharacter* Character)

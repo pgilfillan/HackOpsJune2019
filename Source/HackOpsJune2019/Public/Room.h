@@ -26,5 +26,5 @@ struct FRoom
 	int32 NumAllowedInside = 10000; //Default no effective limit
 
 	// Should include a self-reference, for staying in the same room
-	TArray<TSharedPtr<FRoom>> AdjacentRooms;
+	TArray<TWeakPtr<FRoom>> AdjacentRooms;
 };

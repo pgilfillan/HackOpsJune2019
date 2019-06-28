@@ -18,7 +18,10 @@ FMapState::FMapState(const FMapState& Other)
 	{
 		for (const auto& Room : OtherRoomPair.Value->AdjacentRooms)
 		{
-			Rooms[OtherRoomPair.Key]->AdjacentRooms.Add(Rooms[Room->Name]);
+			if (auto RoomSharedPtr = Room.Pin())
+			{
+				Rooms[OtherRoomPair.Key]->AdjacentRooms.Add(Rooms[RoomSharedPtr->Name]);
+			}
 		}
 	}
 
@@ -52,6 +55,9 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 		NewRoom->Location = RoomLocations[i];
 		Rooms.Emplace(NewRoom->Name, NewRoom);
 	}
+
+	// Add adjacency's, start will all doors open
+	AddAdjacencies();
 
 	auto SRand = FRandomStream(Seed);
 	for (int i = 0; i < CharacterNames.Num(); ++i)
@@ -96,6 +102,47 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 
 		Characters.Add((NewCharacter));
 	}
+}
+
+void FMapState::AddAdjacencies()
+{
+	Rooms["Study"]->AdjacentRooms.Add(Rooms["Study"]);
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Hall"]);
+	Rooms["Library"]->AdjacentRooms.Add(Rooms["Library"]);
+	Rooms["BilliardRoom"]->AdjacentRooms.Add(Rooms["BilliardRoom"]);
+	Rooms["Conservatory"]->AdjacentRooms.Add(Rooms["Conservatory"]);
+	Rooms["Ballroom"]->AdjacentRooms.Add(Rooms["Ballroom"]);
+	Rooms["Kitchen"]->AdjacentRooms.Add(Rooms["Kitchen"]);
+	Rooms["Dining"]->AdjacentRooms.Add(Rooms["Dining"]);
+	Rooms["Lounge"]->AdjacentRooms.Add(Rooms["Lounge"]);
+
+	Rooms["Study"]->AdjacentRooms.Add(Rooms["Hall"]);
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Study"]);
+
+	Rooms["Library"]->AdjacentRooms.Add(Rooms["Hall"]);
+	Rooms["Library"]->AdjacentRooms.Add(Rooms["BilliardRoom"]);
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Library"]);
+	Rooms["BilliardRoom"]->AdjacentRooms.Add(Rooms["Library"]);
+
+	Rooms["BilliardRoom"]->AdjacentRooms.Add(Rooms["Hall"]);
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["BilliardRoom"]);
+
+	Rooms["Conservatory"]->AdjacentRooms.Add(Rooms["Hall"]);
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Conservatory"]);
+
+	Rooms["Ballroom"]->AdjacentRooms.Add(Rooms["Hall"]);
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Ballroom"]);
+
+	Rooms["Kitchen"]->AdjacentRooms.Add(Rooms["Hall"]);
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Kitchen"]);
+	Rooms["Kitchen"]->AdjacentRooms.Add(Rooms["Dining"]);
+	Rooms["Dining"]->AdjacentRooms.Add(Rooms["Kitchen"]);
+
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Dining"]);
+	Rooms["Dining"]->AdjacentRooms.Add(Rooms["Hall"]);
+
+	Rooms["Hall"]->AdjacentRooms.Add(Rooms["Lounge"]);
+	Rooms["Lounge"]->AdjacentRooms.Add(Rooms["Hall"]);
 }
 
 void FMapState::SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith)
