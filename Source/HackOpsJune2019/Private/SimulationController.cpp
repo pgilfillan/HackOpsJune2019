@@ -146,3 +146,15 @@ FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int3
 
 	return Current;
 }
+
+FString ASimulationController::GetRoomNameForCharacter(FMapState& State, FString CharacterName)
+{
+	for (int i = 0; i < State.Characters.Num(); ++i)
+	{
+		if (State.Characters[i]->Name == CharacterName)
+		{
+			return State.Characters[i]->CurrRoom->Name;
+		}
+	}
+	return "";
+}

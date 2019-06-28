@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FMapState& JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps);
 
+	UFUNCTION(BlueprintCallable)
+	FString GetRoomNameForCharacter(UPARAM(ref) FMapState& State, FString CharacterName);
+
 private:
 	const int MaxMoves = 20; //to change
 
