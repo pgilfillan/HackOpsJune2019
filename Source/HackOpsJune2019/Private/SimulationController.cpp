@@ -108,3 +108,40 @@ void ASimulationController::ResetSimulationState(
 	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames);
 	RootMapState->SpawnAllCharacterBlueprint(this);
 }
+
+FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps)
+{
+	if (NumSteps < 0)
+	{
+		if (!Current.ParentState.IsValid())
+		{
+			return Current;
+		}
+
+		auto& CurrStatePtr = Current.ParentState;
+		NumSteps++;
+		while (NumSteps < 0 && CurrStatePtr->ParentState.IsValid())
+		{
+			CurrStatePtr = Current.ParentState;
+			NumSteps++;
+		}
+		return CurrStatePtr.ToSharedRef().Get();
+	} else
+	{
+		if (!Current.ParentState.IsValid())
+		{
+			return Current;
+		}
+
+		auto& CurrStatePtr = Current.NextState;
+		NumSteps--;
+		while (NumSteps > 0 && CurrStatePtr->NextState.IsValid())
+		{
+			CurrStatePtr = Current.NextState;
+			NumSteps--;
+		}
+		return CurrStatePtr.ToSharedRef().Get();
+	}
+
+	return Current;
+}

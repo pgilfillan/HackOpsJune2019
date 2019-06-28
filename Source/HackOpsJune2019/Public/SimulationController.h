@@ -19,6 +19,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Simulation")
 	void ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames);
 
+	UFUNCTION(BlueprintCallable)
+	FMapState& JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps);
 
 private:
 	const int MaxMoves = 20; //to change
