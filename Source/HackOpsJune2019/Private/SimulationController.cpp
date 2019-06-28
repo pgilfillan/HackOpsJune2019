@@ -53,6 +53,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 			for (; i < PlayerPrioritisedActions.Num(); ++i)
 			{
 				auto& DesiredAction = PlayerPrioritisedActions[i];
+				Character->FlavourText = DesiredAction.FlavourText;
 
 				switch (DesiredAction.Type)
 				{
@@ -62,6 +63,9 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 						DesiredAction.CharacterToKill->IsDead = true;
 						CurrState.IsTerminal = true;
 					}
+					break;
+				default:
+					break;
 				}
 
 				// TODO: check for conflicts
