@@ -14,7 +14,7 @@ class HACKOPSJUNE2019_API ASimulationController : public AActor
 	
 public:
 	UFUNCTION(BlueprintCallable)
-	TArray<FMapState> SimulateFrom(FMapState& InitState);
+	void SimulateFrom(FMapState& InitState);
 
 	UFUNCTION(BlueprintCallable, Category = "Simulation")
 	FMapState& ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames, TArray<TSubclassOf<AActor>> ItemBPs);
