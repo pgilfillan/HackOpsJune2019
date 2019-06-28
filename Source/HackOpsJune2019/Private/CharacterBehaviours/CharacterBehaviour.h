@@ -1,6 +1,7 @@
 #include "Room.h"
 #include "MapState.h"
 #include "Action.h"
+#include "GameCharacter.h"
 
 enum class Character
 {
@@ -35,6 +36,26 @@ public:
 	virtual TArray<FInteractionAction> GetPrioritisedInteractionActions(const FMapState& State, FGameCharacter* Character) = 0;
 
 	TMap<FString, Character> CharacterNamesMap;
+
+	bool CharacterPresent(const FString& Character, const FString& RoomName, const FMapState& State)
+	{
+		for (auto& OtherCharacter : State.Characters)
+		{
+			if (Character == OtherCharacter->Name && RoomName == OtherCharacter->CurrRoom->Name)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	bool WeaponPresent(const TSharedPtr<FRoom> Room)
+	{
+		return Room->ItemInRoom("Dagger") || Room->ItemInRoom("Candlestick") ||
+			Room->ItemInRoom("Revolver") || Room->ItemInRoom("Rope") ||
+			Room->ItemInRoom("Lead Pipe") || Room->ItemInRoom("Spanner");
+	}
 };
 
 class RevGreenBehaviour : public CharacterBehaviour
