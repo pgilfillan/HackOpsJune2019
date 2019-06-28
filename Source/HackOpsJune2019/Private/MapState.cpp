@@ -36,7 +36,7 @@ FMapState::FMapState(const FMapState& Other)
 	}
 }
 
-void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations)
+void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames)
 {
 	// TODO: this is a duplicate of the one in CharacterBehaviour.h, need to put in a common place
 	TMap<FString, Character> CharacterNamesMap;
@@ -60,6 +60,15 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 	AddAdjacencies();
 
 	auto SRand = FRandomStream(Seed);
+	//Place items
+	for (auto& Item : ItemNames)
+	{
+		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num() - 1);
+		auto SelectedRoom = Rooms[RoomNames[SelectedRoomIndex]];
+		SelectedRoom->Items.Add(MakeShared<FItem>(Item));
+	}
+
+	//Place characters
 	for (int i = 0; i < CharacterNames.Num(); ++i)
 	{
 		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num() - 1);

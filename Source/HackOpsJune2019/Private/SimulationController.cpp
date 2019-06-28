@@ -97,9 +97,10 @@ void ASimulationController::ResetSimulationState(
 	TArray<FString> CharacterNames,
 	TArray<TSubclassOf<AActor>> CharacterBPs,
 	TArray<FString> RoomNames,
-	TArray<FVector> RoomLocations
+	TArray<FVector> RoomLocations,
+	TArray<FString> ItemNames
 )
 {
-	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations);
+	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames);
 	RootMapState->SpawnAllCharacterBlueprint(this);
 }
