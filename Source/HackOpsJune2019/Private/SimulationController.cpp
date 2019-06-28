@@ -53,6 +53,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 			for (; i < PlayerPrioritisedActions.Num(); ++i)
 			{
 				auto& DesiredAction = PlayerPrioritisedActions[i];
+				Character->FlavourText = DesiredAction.FlavourText;
 
 				switch (DesiredAction.Type)
 				{
@@ -62,6 +63,9 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 						DesiredAction.CharacterToKill->IsDead = true;
 						CurrState.IsTerminal = true;
 					}
+					break;
+				default:
+					break;
 				}
 
 				// TODO: check for conflicts
@@ -92,7 +96,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 	return StateHistory;
 }
 
-void ASimulationController::ResetSimulationState(
+FMapState& ASimulationController::ResetSimulationState(
 	int Seed,
 	TArray<FString> CharacterNames,
 	TArray<TSubclassOf<AActor>> CharacterBPs,
@@ -103,4 +107,42 @@ void ASimulationController::ResetSimulationState(
 {
 	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames);
 	RootMapState->SpawnAllCharacterBlueprint(this);
+	return RootMapState.ToSharedRef().Get();
+}
+
+FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps)
+{
+	if (NumSteps < 0)
+	{
+		if (!Current.ParentState.IsValid())
+		{
+			return Current;
+		}
+
+		auto& CurrStatePtr = Current.ParentState;
+		NumSteps++;
+		while (NumSteps < 0 && CurrStatePtr->ParentState.IsValid())
+		{
+			CurrStatePtr = Current.ParentState;
+			NumSteps++;
+		}
+		return CurrStatePtr.ToSharedRef().Get();
+	} else
+	{
+		if (!Current.ParentState.IsValid())
+		{
+			return Current;
+		}
+
+		auto& CurrStatePtr = Current.NextState;
+		NumSteps--;
+		while (NumSteps > 0 && CurrStatePtr->NextState.IsValid())
+		{
+			CurrStatePtr = Current.NextState;
+			NumSteps--;
+		}
+		return CurrStatePtr.ToSharedRef().Get();
+	}
+
+	return Current;
 }
