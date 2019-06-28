@@ -24,19 +24,9 @@ void ASimulationController::SimulateFrom(FMapState& InitState)
 			for (; i < PrioritisedMoveActions.Num(); ++i)
 			{
 				auto& DesiredRoom = PrioritisedMoveActions[i];
-				//TODO: check in a better way (this depends on order)
-				if (DesiredRoom->NumCharactersInside + 1 < DesiredRoom->NumAllowedInside)
-				{
-					Character->CurrRoom->NumCharactersInside--;
-					DesiredRoom->NumCharactersInside++;
-					Character->CurrRoom = DesiredRoom;
-				}
-			}
-
-			// If no suitable move found (because of conflicts)
-			if (i == PrioritisedMoveActions.Num())
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Movement: No move was able to be taken, defaulting to do nothing"));
+				Character->CurrRoom->NumCharactersInside--;
+				DesiredRoom->NumCharactersInside++;
+				Character->CurrRoom = DesiredRoom;
 			}
 		}
 
@@ -66,12 +56,6 @@ void ASimulationController::SimulateFrom(FMapState& InitState)
 
 				// TODO: check for conflicts
 				break;
-			}
-
-			// If no suitable move found (because of conflicts)
-			if (i == PlayerPrioritisedActions.Num())
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Interaction: No move was able to be taken, defaulting to do nothing"));
 			}
 		}
 
@@ -108,10 +92,14 @@ FMapState& ASimulationController::ResetSimulationState(
 
 FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps)
 {
+
+	UE_LOG(LogTemp, Warning, TEXT("Log 1"));
 	if (NumSteps < 0)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Log 2"));
 		if (!Current.ParentState.IsValid())
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Log 3"));
 			return Current;
 		}
 
@@ -119,14 +107,18 @@ FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int3
 		NumSteps++;
 		while (NumSteps < 0 && CurrStatePtr->ParentState.IsValid())
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Log 4"));
 			CurrStatePtr = Current.ParentState;
 			NumSteps++;
 		}
+		UE_LOG(LogTemp, Warning, TEXT("Log 5"));
 		return CurrStatePtr.ToSharedRef().Get();
 	} else
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Log 6"));
 		if (!Current.ParentState.IsValid())
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Log 7"));
 			return Current;
 		}
 
@@ -134,12 +126,15 @@ FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int3
 		NumSteps--;
 		while (NumSteps > 0 && CurrStatePtr->NextState.IsValid())
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Log 8"));
 			CurrStatePtr = Current.NextState;
 			NumSteps--;
 		}
+		UE_LOG(LogTemp, Warning, TEXT("Log 9"));
 		return CurrStatePtr.ToSharedRef().Get();
 	}
 
+	UE_LOG(LogTemp, Warning, TEXT("Log 10"));
 	return Current;
 }
 
