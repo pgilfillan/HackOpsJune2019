@@ -23,6 +23,9 @@ public:
 	FMapState& JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps);
 
 	UFUNCTION(BlueprintCallable)
+	void ChangeDoorOpen(UPARAM(ref) FMapState& Current, FString RoomName1, FString RoomName2, bool IsOpen);
+
+	UFUNCTION(BlueprintCallable)
 	FString GetRoomNameForCharacter(UPARAM(ref) FMapState& State, FString CharacterName);
 
 private:
