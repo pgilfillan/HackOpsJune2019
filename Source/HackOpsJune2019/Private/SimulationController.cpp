@@ -7,20 +7,18 @@
 
 void ASimulationController::SimulateFrom(FMapState& InitState)
 {
-	FMapState CurrState(InitState);
-	TSharedPtr<FMapState> CurrStatePtr = MakeShareable(&CurrState);
-	InitState.NextState = CurrStatePtr;
-	CurrState.ParentState = MakeShareable(&InitState);
+	TSharedPtr<FMapState> CurrState = MakeShared<FMapState>(InitState);
+	InitState.NextState = CurrState;
+	// TODO: add back
+	//CurrState->ParentState = MakeShareable(&InitState);
 	
 	int ElapsedMoves = 0;
 	while (ElapsedMoves < MaxMoves)
 	{
-		auto test = CurrState;
-
 		// Get move actions
-		for (auto& Character : CurrState.Characters)
+		for (auto& Character : CurrState->Characters)
 		{
-			auto PrioritisedMoveActions = Character->Behaviour->GetPrioritisedMoveActions(CurrState, Character.Get());
+			auto PrioritisedMoveActions = Character->Behaviour->GetPrioritisedMoveActions(CurrState.ToSharedRef().Get(), Character.Get());
 
 			int i = 0;
 			for (; i < PrioritisedMoveActions.Num(); ++i)
@@ -38,14 +36,14 @@ void ASimulationController::SimulateFrom(FMapState& InitState)
 			// If no suitable move found (because of conflicts)
 			if (i == PrioritisedMoveActions.Num())
 			{
-				UE_LOG(LogTemp, Warning, TEXT("No move was able to be taken, defaulting to do nothing"));
+				UE_LOG(LogTemp, Warning, TEXT("Movement: No move was able to be taken, defaulting to do nothing"));
 			}
 		}
 
 		// Get interaction actions
-		for (auto& Character : CurrState.Characters)
+		for (auto& Character : CurrState->Characters)
 		{
-			auto PlayerPrioritisedActions = Character->Behaviour->GetPrioritisedInteractionActions(CurrState, Character.Get());
+			auto PlayerPrioritisedActions = Character->Behaviour->GetPrioritisedInteractionActions(CurrState.ToSharedRef().Get(), Character.Get());
 
 			int i = 0;
 			for (; i < PlayerPrioritisedActions.Num(); ++i)
@@ -59,7 +57,7 @@ void ASimulationController::SimulateFrom(FMapState& InitState)
 					if (Character->CurrRoom == DesiredAction.CharacterToKill->CurrRoom)
 					{
 						DesiredAction.CharacterToKill->IsDead = true;
-						CurrState.IsTerminal = true;
+						CurrState->IsTerminal = true;
 					}
 					break;
 				default:
@@ -73,20 +71,19 @@ void ASimulationController::SimulateFrom(FMapState& InitState)
 			// If no suitable move found (because of conflicts)
 			if (i == PlayerPrioritisedActions.Num())
 			{
-				UE_LOG(LogTemp, Warning, TEXT("No move was able to be taken, defaulting to do nothing"));
+				UE_LOG(LogTemp, Warning, TEXT("Interaction: No move was able to be taken, defaulting to do nothing"));
 			}
 		}
 
-		if (CurrState.IsTerminal)
+		if (CurrState->IsTerminal)
 		{
 			break;
 		}
 
-		auto& PrevStatePtr = CurrStatePtr;
-		CurrState = FMapState(CurrState);
-		CurrStatePtr = MakeShareable(&CurrState);
-		PrevStatePtr->NextState = CurrStatePtr;
-		CurrState.ParentState = PrevStatePtr;
+		auto PrevState = CurrState;
+		CurrState = MakeShared<FMapState>(CurrState.ToSharedRef().Get());
+		PrevState->NextState = CurrState;
+		CurrState->ParentState = PrevState;
 
 		ElapsedMoves++;
 	}
