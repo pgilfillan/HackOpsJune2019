@@ -109,7 +109,7 @@ FMapState& ASimulationController::ResetSimulationState(
 	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames, ItemBPs);
 	RootMapState->SpawnAllCharacterBlueprint(this);
 	RootMapState->SpawnAllItemBlueprint(this);
-	//SimulateFrom(*(RootMapState.Get()));
+	SimulateFrom(*(RootMapState.Get()));
 	return RootMapState.ToSharedRef().Get();
 }
 
