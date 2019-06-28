@@ -96,7 +96,7 @@ TArray<FMapState> ASimulationController::SimulateFrom(FMapState& InitState)
 	return StateHistory;
 }
 
-void ASimulationController::ResetSimulationState(
+FMapState& ASimulationController::ResetSimulationState(
 	int Seed,
 	TArray<FString> CharacterNames,
 	TArray<TSubclassOf<AActor>> CharacterBPs,
@@ -107,6 +107,7 @@ void ASimulationController::ResetSimulationState(
 {
 	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames);
 	RootMapState->SpawnAllCharacterBlueprint(this);
+	return RootMapState.ToSharedRef().Get();
 }
 
 FMapState& ASimulationController::JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps)
