@@ -17,7 +17,7 @@ struct FMapState
 	FMapState() {}
 	FMapState(const FMapState& other);
 
-	void GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations);
+	void GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames);
 	void SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith);
 
 	TArray<TSharedPtr<FGameCharacter>> Characters;
@@ -27,4 +27,7 @@ struct FMapState
 
 	TSharedPtr<FMapState> ParentState;
 	TSharedPtr<FMapState> NextState;
+
+private:
+	void AddAdjacencies();
 };
