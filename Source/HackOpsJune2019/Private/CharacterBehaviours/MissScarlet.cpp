@@ -4,13 +4,8 @@
 TArray<TSharedPtr<FRoom>> MissScarletBehaviour::GetPrioritisedMoveActions(const FMapState& State, FGameCharacter* Character)
 {
 	TArray<TSharedPtr<FRoom>> Rooms;
-	for (auto& RoomWkPtr : Character->CurrRoom->AdjacentRooms)
-	{
-		if (RoomWkPtr.IsValid())
-		{
-			Rooms.Add(RoomWkPtr.Pin());
-		}
-	}
+	auto RoomSharedPtr = Character->CurrRoom->AdjacentRooms[1].Pin();
+	Rooms.Add(RoomSharedPtr);
 	return Rooms;
 }
 

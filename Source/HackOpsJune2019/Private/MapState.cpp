@@ -109,7 +109,7 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 			break;
 		}
 
-		Characters.Add((NewCharacter));
+		Characters.Add(NewCharacter);
 	}
 }
 
