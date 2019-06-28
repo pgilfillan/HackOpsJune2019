@@ -31,4 +31,7 @@ public:
 	FString Name;
 	TSubclassOf<class AActor> GameCharacterBP;
 	TSharedPtr<CharacterBehaviour> Behaviour;
+	
+	UPROPERTY(BlueprintReadOnly)
+	FString FlavourText;
 };
