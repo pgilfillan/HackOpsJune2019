@@ -17,7 +17,7 @@ public:
 	TArray<FMapState> SimulateFrom(FMapState& InitState);
 
 	UFUNCTION(BlueprintCallable, Category = "Simulation")
-	FMapState& ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames);
+	FMapState& ResetSimulationState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames, TArray<TSubclassOf<AActor>> ItemBPs);
 
 	UFUNCTION(BlueprintCallable)
 	FMapState& JumpSteps(UPARAM(ref) FMapState& Current, int32 NumSteps);

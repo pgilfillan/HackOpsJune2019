@@ -36,7 +36,7 @@ FMapState::FMapState(const FMapState& Other)
 	}
 }
 
-void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames)
+void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames, TArray<TSubclassOf<AActor>> ItemBPs)
 {
 	// TODO: this is a duplicate of the one in CharacterBehaviour.h, need to put in a common place
 	TMap<FString, Character> CharacterNamesMap;
@@ -61,11 +61,11 @@ void FMapState::GenerateMapState(int Seed, TArray<FString> CharacterNames, TArra
 
 	auto SRand = FRandomStream(Seed);
 	//Place items
-	for (auto& Item : ItemNames)
+	for (int i = 0; i < ItemNames.Num(); ++i)
 	{
 		auto SelectedRoomIndex = SRand.RandRange(0, Rooms.Num() - 1);
 		auto SelectedRoom = Rooms[RoomNames[SelectedRoomIndex]];
-		SelectedRoom->Items.Add(MakeShared<FItem>(Item));
+		SelectedRoom->Items.Add(MakeShared<FItem>(ItemNames[i], ItemBPs[i]));
 	}
 
 	//Place characters
@@ -159,5 +159,20 @@ void FMapState::SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith)
 	for (int i = 0; i < Characters.Num(); ++i)
 	{
 		Characters[i]->SpawnCharacterBlueprint(ActorToSpawnWith, i );
+	}
+}
+
+void FMapState::SpawnAllItemBlueprint(AActor* ActorToSpawnWith)
+{
+	for (int i = 0; i < Rooms.Num(); ++i)
+	{
+		for (const TPair<FString, TSharedPtr<FRoom>>& pair : Rooms)
+		{
+			for (int j = 0; j < pair.Value->Items.Num(); ++j)
+			{
+				pair.Value->Items[j]->SpawnItemBlueprint(ActorToSpawnWith, pair.Value.Get());
+			}
+			
+		}
 	}
 }
