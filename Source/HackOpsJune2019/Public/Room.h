@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Item.h"
 #include "Room.generated.h"
 
 class UGameCharacter;
+struct FItem;
 
 USTRUCT(BlueprintType)
 struct FRoom

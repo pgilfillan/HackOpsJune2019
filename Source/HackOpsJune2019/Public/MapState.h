@@ -17,8 +17,9 @@ struct FMapState
 	FMapState() {}
 	FMapState(const FMapState& other);
 
-	void GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames);
+	void GenerateMapState(int Seed, TArray<FString> CharacterNames, TArray<TSubclassOf<AActor>> CharacterBPs, TArray<FString> RoomNames, TArray<FVector> RoomLocations, TArray<FString> ItemNames, TArray<TSubclassOf<AActor>> ItemBPs);
 	void SpawnAllCharacterBlueprint(AActor* ActorToSpawnWith);
+	void SpawnAllItemBlueprint(AActor* ActorToSpawnWith);
 
 	TArray<TSharedPtr<FGameCharacter>> Characters;
 	//Index by name

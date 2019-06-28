@@ -2,6 +2,7 @@
 
 
 #include "Room.h"
+#include "Item.h"
 
 FRoom::FRoom(const FRoom& Other)
 {

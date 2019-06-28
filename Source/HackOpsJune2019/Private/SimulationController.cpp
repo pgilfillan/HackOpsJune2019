@@ -102,11 +102,13 @@ FMapState& ASimulationController::ResetSimulationState(
 	TArray<TSubclassOf<AActor>> CharacterBPs,
 	TArray<FString> RoomNames,
 	TArray<FVector> RoomLocations,
-	TArray<FString> ItemNames
+	TArray<FString> ItemNames,
+	TArray<TSubclassOf<AActor>> ItemBPs
 )
 {
-	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames);
+	RootMapState->GenerateMapState(Seed, CharacterNames, CharacterBPs, RoomNames, RoomLocations, ItemNames, ItemBPs);
 	RootMapState->SpawnAllCharacterBlueprint(this);
+	RootMapState->SpawnAllItemBlueprint(this);
 	return RootMapState.ToSharedRef().Get();
 }
 
