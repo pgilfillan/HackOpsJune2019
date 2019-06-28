@@ -28,7 +28,10 @@ public:
 	TSharedPtr<FRoom> CurrRoom;
 	TSharedPtr<FItem> HeldItem;
 	bool IsDead = false;
+
+	UPROPERTY()
 	FString Name;
+
 	TSubclassOf<class AActor> GameCharacterBP;
 	TSharedPtr<CharacterBehaviour> Behaviour;
 	
