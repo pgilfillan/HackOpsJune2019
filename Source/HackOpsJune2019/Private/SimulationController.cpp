@@ -153,8 +153,7 @@ void ASimulationController::ChangeDoorOpen(UPARAM(ref) FMapState& Current, FStri
 	{
 		Current.Rooms[RoomName1]->AdjacentRooms.Add(Current.Rooms[RoomName2]);
 		Current.Rooms[RoomName2]->AdjacentRooms.Add(Current.Rooms[RoomName1]);
-	}
-	else
+	} else
 	{
 		const bool bAllowShrinking = false;
 		auto& Adj1 = Current.Rooms[RoomName1]->AdjacentRooms;
@@ -180,4 +179,16 @@ void ASimulationController::ChangeDoorOpen(UPARAM(ref) FMapState& Current, FStri
 			}
 		}
 	}
+}
+
+FString ASimulationController::GetRoomNameForCharacter(UPARAM(ref) FMapState& State, FString CharacterName)
+{
+	for (int i = 0; i < State.Characters.Num(); ++i)
+	{
+		if (State.Characters[i]->Name == CharacterName)
+		{
+			return State.Characters[i]->CurrRoom->Name;
+		}
+	}
+	return "";
 }
